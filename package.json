@@ -22,7 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:editor": "eclint fix"
+    "lint:editor": "eclint fix",
+    "lint:styles": "stylelint \"./src/**/*.(scss)\" --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +44,12 @@
     ]
   },
   "devDependencies": {
-    "eclint": "^2.8.1"
+    "eclint": "^2.8.1",
+    "prettier": "^2.2.1",
+    "prettier-stylelint": "^0.4.2",
+    "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-scss": "^3.18.0"
   }
 }
