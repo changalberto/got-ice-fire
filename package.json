@@ -22,6 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "yarn lint:scripts && yarn lint:styles && yarn lint:editor",
     "lint:editor": "eclint fix",
     "lint:styles": "stylelint \"./src/**/*.(scss)\" --fix",
     "lint:scripts": "eslint --fix . --ext .ts,.tsx src"
@@ -57,11 +58,17 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.7",
     "prettier": "^2.2.1",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^13.8.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-prettier": "^1.1.2",
     "stylelint-scss": "^3.18.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }
