@@ -18,4 +18,10 @@ export const gotApi = {
   getBooks: async () => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/books`)
   },
+  getHouses: async () => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses`)
+  },
+  getCharacterById: async (id: string) => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
+  },
 }

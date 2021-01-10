@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState, AppDispatch } from '../../store'
 import { setBreakpoint } from '../../store/actions/layouts.actions'
-import { fetchGotBooks } from '../../store/actions/services.actions'
+import { fetchGotBooks, fetchGotHouses } from '../../store/actions/services.actions'
 
 import BooksTable from '../../components/BooksTable'
 
@@ -21,10 +21,15 @@ export const HomeContainer = () => {
     [dispatch]
   )
 
-  // On Initial Mount, Fetch Books
+  // On Initial Mount, Fetch Books and Houses
   useEffect(() => {
-    const promise = dispatch(fetchGotBooks())
-    return () => promise.abort()
+    const booksPromise = dispatch(fetchGotBooks())
+    const housesPromise = dispatch(fetchGotHouses())
+
+    return () => {
+      booksPromise.abort()
+      housesPromise.abort()
+    }
   }, [dispatch])
 
   return useMemo(

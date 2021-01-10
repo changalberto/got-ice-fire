@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchGotBooks } from '../actions/services.actions'
+import { fetchGotBooks, fetchGotHouses } from '../actions/services.actions'
 
 export const servicesSlice = createSlice({
   name: 'services',
@@ -12,8 +12,11 @@ export const servicesSlice = createSlice({
   reducers: {},
   // Thunks
   extraReducers: {
-    [`${fetchGotBooks.fulfilled}`]: (state, action) => {
-      state.books = action.payload
+    [`${fetchGotBooks.fulfilled}`]: (state, { payload }) => {
+      state.books = payload
+    },
+    [`${fetchGotHouses.fulfilled}`]: (state, { payload }) => {
+      state.houses = payload
     },
   },
 })
