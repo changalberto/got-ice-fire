@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import { AsyncThunkAction } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store'
+import { RootState, AppDispatch } from '../../store'
 import { setBreakpoint } from '../../store/actions/layouts.actions'
 import { fetchGotBooks } from '../../store/actions/services.actions'
 
@@ -13,7 +12,7 @@ import './HomeContainer.scss'
 export const HomeContainer = () => {
   const layouts = useSelector((state: RootState) => state.layouts)
   const { books } = useSelector((state: RootState) => state.services)
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
 
   const handleChangeBreakpoint = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,10 +21,10 @@ export const HomeContainer = () => {
     [dispatch]
   )
 
+  // On Initial Mount, Fetch Books
   useEffect(() => {
     const promise = dispatch(fetchGotBooks())
-    console.log('promise', promise)
-    // return () => promise.abort()
+    return () => promise.abort()
   }, [dispatch])
 
   return useMemo(
