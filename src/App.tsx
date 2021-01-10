@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+
+import { RootState } from './store'
+
 import logo from './logo.svg'
 import './App.scss'
 
 function App() {
+  const layouts = useSelector((state: RootState) => state.layouts)
+
+  useEffect(() => {
+    console.log(layouts)
+  }, [layouts])
+
   return (
     <div className="App">
       <header className="App-header">
