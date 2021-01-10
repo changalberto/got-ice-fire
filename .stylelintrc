@@ -20,8 +20,6 @@
     "indentation": 2,
     "string-quotes": "single",
     "no-duplicate-selectors": true,
-    "color-hex-case": "upper",
-    "color-hex-length": "long",
     "selector-no-qualifying-type": true,
     "selector-combinator-space-after": "always",
     "selector-attribute-quotes": "always",
