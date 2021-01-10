@@ -25,6 +25,7 @@ export const HomeContainer = () => {
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
+        <p>{process.env.REACT_APP_ENDPOINT_URL}</p>
         <p>Current Breakpoint: {layouts.breakpoint}</p>
         <button onClick={handleChangeBreakpoint}>Set Breakpoint</button>
       </header>
