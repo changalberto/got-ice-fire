@@ -5,7 +5,11 @@ export const layoutsSlice = createSlice({
   initialState: {
     breakpoint: null,
   },
-  reducers: {},
+  reducers: {
+    breakpointChange: (state, action) => {
+      state.breakpoint = action.payload
+    },
+  },
 })
 
 export default layoutsSlice.reducer
