@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { layoutsSlice } from '../reducers/layouts'
+import { layoutsSlice } from '../reducers/layouts.reducer'
 
 const { breakpointChange } = layoutsSlice.actions
 

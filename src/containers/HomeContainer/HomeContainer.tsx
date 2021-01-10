@@ -1,9 +1,10 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useEffect, useMemo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+// import { AsyncThunkAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { setBreakpoint } from '../../store/actions/layoutsActions'
-import { useFetchBooks } from '../../services/books.service'
+import { setBreakpoint } from '../../store/actions/layouts.actions'
+import { fetchGotBooks } from '../../store/actions/services.actions'
 
 import BooksTable from '../../components/BooksTable'
 
@@ -11,8 +12,8 @@ import './HomeContainer.scss'
 
 export const HomeContainer = () => {
   const layouts = useSelector((state: RootState) => state.layouts)
+  const { books } = useSelector((state: RootState) => state.services)
   const dispatch = useDispatch()
-  const books = useFetchBooks()
 
   const handleChangeBreakpoint = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,6 +21,12 @@ export const HomeContainer = () => {
     },
     [dispatch]
   )
+
+  useEffect(() => {
+    const promise = dispatch(fetchGotBooks())
+    console.log('promise', promise)
+    // return () => promise.abort()
+  }, [dispatch])
 
   return useMemo(
     () => (
