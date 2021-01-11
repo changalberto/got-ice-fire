@@ -1,14 +1,7 @@
 import React from 'react'
-import { Router, Route } from 'wouter'
 
-import { HomeContainer } from './containers/HomeContainer'
+import Routes from './Routes'
 
-const App = () => {
-  return (
-    <Router>
-      <Route path="/" component={HomeContainer} />
-    </Router>
-  )
-}
+const App = () => <Routes />
 
 export default App
