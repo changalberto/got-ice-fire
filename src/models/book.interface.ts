@@ -1,8 +1,4 @@
 export interface IBook {
-  id: string
-  first_name: string
-  last_name: string
-  email: string
   authors: string[]
   characters: string[]
   country: string

@@ -8,6 +8,13 @@ export const fetchGotBooks = createAsyncThunk('@fetch/fetchGotBooks', async () =
 })
 
 export const fetchGotHouses = createAsyncThunk('@fetch/fetchGotHouses', async () => {
-  const { data } = await gotApi.getHouses()
+  const response = await gotApi.getHouses()
+  const { data } = response
+  return data
+})
+
+export const fetchGotCharacter = createAsyncThunk('@fetch/getGotCharacter', async (uri: string) => {
+  const response = await gotApi.getCharacterByUri(uri)
+  const { data } = response
   return data
 })

@@ -24,4 +24,7 @@ export const gotApi = {
   getCharacterById: async (id: string) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
   },
+  getCharacterByUri: async (uri: string) => {
+    return http.get(uri)
+  },
 }

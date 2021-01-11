@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchGotBooks, fetchGotHouses } from '../actions/services.actions'
+import { IBook, IHouse, ICharacter } from '../../models'
+import { fetchGotBooks, fetchGotHouses, fetchGotCharacter } from '../actions/services.actions'
 
 export const servicesSlice = createSlice({
   name: 'services',
   initialState: {
-    books: [],
-    houses: [],
-    characters: [],
+    books: [] as IBook[],
+    houses: [] as IHouse[],
+    character: {} as ICharacter,
   },
   reducers: {},
   // Thunks
@@ -17,6 +18,9 @@ export const servicesSlice = createSlice({
     },
     [`${fetchGotHouses.fulfilled}`]: (state, { payload }) => {
       state.houses = payload
+    },
+    [`${fetchGotCharacter.fulfilled}`]: (state, { payload }) => {
+      state.character = payload
     },
   },
 })
