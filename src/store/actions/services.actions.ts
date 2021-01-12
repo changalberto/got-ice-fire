@@ -18,8 +18,8 @@ export const fetchGotBooksByUri = createAsyncThunk('@fetch/fetchGotBooksByUri', 
   return { results: data, links: refs }
 })
 
-export const fetchGotHouses = createAsyncThunk('@fetch/fetchGotHouses', async () => {
-  const response = await gotApi.getHouses()
+export const fetchGotHouses = createAsyncThunk('@fetch/fetchGotHouses', async (params?: Pagination) => {
+  const response = await gotApi.getHouses(params)
   const { data } = response
   const { refs } = LinkHeader.parse(response.headers.link)
   return { results: data, links: refs }

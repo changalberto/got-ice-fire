@@ -8,7 +8,7 @@ const App = () => {
     <>
       <nav>
         <Link href="/">Books</Link>
-        <Link href="/Houses">Houses</Link>
+        <Link href="/houses">Houses</Link>
       </nav>
       <Routes />
     </>
