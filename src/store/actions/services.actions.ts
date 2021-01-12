@@ -25,6 +25,12 @@ export const fetchGotHouses = createAsyncThunk('@fetch/fetchGotHouses', async (p
   return { results: data, links: refs }
 })
 
+export const fetchGotHouseById = createAsyncThunk('@fetch/fetchGotHouseById', async (id: string) => {
+  const response = await gotApi.getHouseById(id)
+  const { data } = response
+  return data
+})
+
 export const fetchGotCharacters = createAsyncThunk('@fetch/getGotCharacters', async (params?: Pagination) => {
   const response = await gotApi.getCharacters(params)
   const { data } = response
@@ -32,8 +38,8 @@ export const fetchGotCharacters = createAsyncThunk('@fetch/getGotCharacters', as
   return { results: data, links: refs }
 })
 
-export const fetchGotCharacter = createAsyncThunk('@fetch/getGotCharacter', async (uri: string) => {
-  const response = await gotApi.getDataByUri(uri)
+export const fetchGotCharacterById = createAsyncThunk('@fetch/fetchGotCharacterById', async (id: string) => {
+  const response = await gotApi.getCharacterById(id)
   const { data } = response
   return data
 })

@@ -5,14 +5,20 @@ import { isStringEmptyOrNull, historyPushQueryParams, getPageNumberFromUriParam 
 type PaginationProps = {
   currentPage: number
   pageCount: number
+  pageSize: number
   prevUri?: string
   nextUri?: string
   lastUri?: string
 }
-export const Pagination = ({ pageCount, currentPage, prevUri, nextUri, lastUri }: PaginationProps) => {
+export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri, lastUri }: PaginationProps) => {
   const handleGotoPageByNumber = useCallback((e: React.MouseEvent<HTMLButtonElement>, number: number) => {
     e.preventDefault()
     historyPushQueryParams('page', `${number}`)
+  }, [])
+
+  const handleChangePageSize = useCallback((e: React.FormEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    historyPushQueryParams('pageSize', `${e.currentTarget.value}`)
   }, [])
 
   return (
@@ -50,6 +56,14 @@ export const Pagination = ({ pageCount, currentPage, prevUri, nextUri, lastUri }
       >
         Next
       </button>
+      <select onChange={e => e.currentTarget.blur()} onBlur={e => handleChangePageSize(e)} value={`${pageSize}`}>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
     </div>
   )
 }

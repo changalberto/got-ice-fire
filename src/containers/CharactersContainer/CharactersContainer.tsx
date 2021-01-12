@@ -4,26 +4,25 @@ import { Link } from 'wouter'
 import { useSearchParam } from 'react-use'
 
 import {
-  getBookCoverImageUrl,
-  BookCoverSize,
   isArrayEmptyOrNull,
   getPageNumberFromUriParam,
   getUriByRel,
+  getLastPathnameFromUrl,
+  isStringEmptyOrNull,
 } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
-import { fetchGotBooks } from '../../store/actions/services.actions'
+import { fetchGotCharacters } from '../../store/actions/services.actions'
 
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
-export const HomeContainer = () => {
+export const CharactersContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
-  const { books } = useSelector((state: RootState) => state.services)
+  const { characters } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
   const pageQuery = useSearchParam('page')
   const pageSizeQuery = useSearchParam('pageSize')
 
-  // Local State
   const [state, setState] = useState({
     currentPage: 0,
     pageSize: 0,
@@ -39,81 +38,48 @@ export const HomeContainer = () => {
     setState(state => ({
       ...state,
       currentPage: pageQuery !== null ? +pageQuery : 1,
-      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 3,
+      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 30,
     }))
   }, [pageQuery, pageSizeQuery])
 
   // Fetch New Books Data when Page Index or Page Size Changes
   useEffect(() => {
     if (state.currentPage && state.pageSize) {
-      const booksPromise = dispatch(fetchGotBooks({ page: state.currentPage, pageSize: state.pageSize }))
+      const housesPromise = dispatch(fetchGotCharacters({ page: state.currentPage, pageSize: state.pageSize }))
       return () => {
-        booksPromise.abort()
+        housesPromise.abort()
       }
     }
   }, [state.currentPage, state.pageSize, dispatch])
 
   // Update pagination state when Respnse Header Link state is updated
   useEffect(() => {
-    if (!isArrayEmptyOrNull(books.links)) {
-      const nextUri = getUriByRel(books.links, 'next')
-      const prevUri = getUriByRel(books.links, 'prev')
-      const lastUri = getUriByRel(books.links, 'last')
+    if (!isArrayEmptyOrNull(characters.links)) {
+      const nextUri = getUriByRel(characters.links, 'next')
+      const prevUri = getUriByRel(characters.links, 'prev')
+      const lastUri = getUriByRel(characters.links, 'last')
       const pageCount = getPageNumberFromUriParam(lastUri)
 
       setState(state => ({ ...state, nextUri, prevUri, lastUri, pageCount }))
     }
-  }, [books.links])
+  }, [characters.links])
 
   // Table Columns Config
   const columns = useMemo(
     () => [
       {
-        Header: '',
-        accessor: 'isbn',
+        Header: 'Name',
+        accessor: 'name',
         Cell: (props: any) => {
           const {
             row: { original },
           } = props
-          // Render Image
+          const characterId = getLastPathnameFromUrl(original.url)
           return (
-            <Link href={`/book/${original.isbn}`}>
-              <img src={getBookCoverImageUrl(original.isbn, BookCoverSize.Medium)} alt={original.name} />
+            <Link href={`/characters/${characterId}`}>
+              {isStringEmptyOrNull(original.name) ? 'N/A' : original.name}
             </Link>
           )
-        },
-      },
-      {
-        Header: 'Title',
-        accessor: 'name',
-      },
-      {
-        Header: 'Authors',
-        accessor: 'authors',
-      },
-      {
-        Header: 'Release Date',
-        accessor: 'released',
-      },
-      {
-        Header: 'Publisher',
-        accessor: 'publisher',
-      },
-      {
-        Header: 'Country',
-        accessor: 'country',
-      },
-      {
-        Header: 'Format',
-        accessor: 'mediaType',
-      },
-      {
-        Header: 'Page',
-        accessor: 'numberOfPages',
-        Cell: (props: any) => {
-          const { value } = props
-          // Render Image
-          return <span>{value} pages</span>
         },
       },
     ],
@@ -122,8 +88,8 @@ export const HomeContainer = () => {
 
   return useMemo(
     () => (
-      <div className="home">
-        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={books.results} />}
+      <div className="characters">
+        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={characters.results} />}
 
         <Pagination
           pageCount={state.pageCount}
@@ -135,6 +101,6 @@ export const HomeContainer = () => {
         />
       </div>
     ),
-    [books, columns, state, isLoading]
+    [characters, columns, state, isLoading]
   )
 }

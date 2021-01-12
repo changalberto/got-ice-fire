@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'wouter'
 import { useSearchParam } from 'react-use'
 
-import { isArrayEmptyOrNull, getPageNumberFromUriParam } from '../../utilities'
+import { isArrayEmptyOrNull, getPageNumberFromUriParam, getUriByRel, getLastPathnameFromUrl } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotHouses } from '../../store/actions/services.actions'
 
@@ -26,24 +26,13 @@ export const HousesContainer = () => {
     lastUri: '',
   })
 
-  /**
-  * Filter Links for Uri by Rel value
-  * @private
-  * @param links
-  * @param rel
-  */
-  const _getUriByRel = (links: any[], rel: string): string => {
-    const [link]: { uri: string; rel: string }[] = links.filter((link: any) => link.rel === rel)
-    return link ? link.uri : ''
-  }
-
   // Deeplinking query param change effect
   // NOTE: Use querystring param as the source of truth to change page number
   useEffect(() => {
     setState(state => ({
       ...state,
       currentPage: pageQuery !== null ? +pageQuery : 1,
-      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 3,
+      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 20,
     }))
   }, [pageQuery, pageSizeQuery])
 
@@ -60,9 +49,9 @@ export const HousesContainer = () => {
   // Update pagination state when Respnse Header Link state is updated
   useEffect(() => {
     if (!isArrayEmptyOrNull(houses.links)) {
-      const nextUri = _getUriByRel(houses.links, 'next')
-      const prevUri = _getUriByRel(houses.links, 'prev')
-      const lastUri = _getUriByRel(houses.links, 'last')
+      const nextUri = getUriByRel(houses.links, 'next')
+      const prevUri = getUriByRel(houses.links, 'prev')
+      const lastUri = getUriByRel(houses.links, 'last')
       const pageCount = getPageNumberFromUriParam(lastUri)
 
       setState(state => ({ ...state, nextUri, prevUri, lastUri, pageCount }))
@@ -73,8 +62,71 @@ export const HousesContainer = () => {
   const columns = useMemo(
     () => [
       {
-        Header: 'Title',
+        Header: 'Name',
         accessor: 'name',
+        Cell: (props: any) => {
+          const {
+            row: { original },
+          } = props
+          const houseId = getLastPathnameFromUrl(original.url)
+          return <Link href={`/house/${houseId}`}>{original.name}</Link>
+        },
+      },
+      {
+        Header: 'Region',
+        accessor: 'region',
+      },
+      {
+        Header: 'Coat of Arms',
+        accessor: 'coatOfArms',
+      },
+      {
+        Header: 'Words',
+        accessor: 'words',
+      },
+      {
+        Header: 'Titles',
+        accessor: 'titles', // Array
+      },
+      {
+        Header: 'Seats',
+        accessor: 'seats', // Array
+      },
+      {
+        Header: 'Current Lord',
+        accessor: 'currentLord',
+      },
+      {
+        Header: 'Heir',
+        accessor: 'heir',
+      },
+      {
+        Header: 'Overlord',
+        accessor: 'overlord',
+      },
+      {
+        Header: 'Founded',
+        accessor: 'founded',
+      },
+      {
+        Header: 'Founder',
+        accessor: 'founder',
+      },
+      {
+        Header: 'Died Out',
+        accessor: 'diedOut',
+      },
+      {
+        Header: 'Ancestral Weapons',
+        accessor: 'ancestralWeapons', // Array
+      },
+      {
+        Header: 'Cadet Branches',
+        accessor: 'cadetBranches', // Array
+      },
+      {
+        Header: 'Sworn Members',
+        accessor: 'swornMembers', // Array
       },
     ],
     []
@@ -82,12 +134,13 @@ export const HousesContainer = () => {
 
   return useMemo(
     () => (
-      <div className="Home">
+      <div className="house">
         {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={houses.results} />}
 
         <Pagination
           pageCount={state.pageCount}
           currentPage={state.currentPage}
+          pageSize={state.pageSize}
           prevUri={state.prevUri}
           nextUri={state.nextUri}
           lastUri={state.lastUri}

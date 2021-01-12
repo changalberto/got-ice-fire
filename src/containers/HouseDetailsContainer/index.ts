@@ -1,0 +1,1 @@
+export { HouseDetailsContainer } from './HouseDetailsContainer'

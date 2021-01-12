@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { IBook, IHouse, ICharacter } from '../../models'
-import { fetchGotBooks, fetchGotBooksByUri, fetchGotHouses, fetchGotCharacters } from '../actions/services.actions'
+import {
+  fetchGotBooks,
+  fetchGotBooksByUri,
+  fetchGotHouses,
+  fetchGotCharacters,
+  fetchGotHouseById,
+} from '../actions/services.actions'
 
 export const servicesSlice = createSlice({
   name: 'services',
@@ -18,6 +24,9 @@ export const servicesSlice = createSlice({
       results: [] as ICharacter[],
       links: [],
     },
+    book: {} as IBook,
+    house: {} as IHouse,
+    character: {} as ICharacter,
   },
   reducers: {},
   // Thunks
@@ -33,6 +42,9 @@ export const servicesSlice = createSlice({
     [`${fetchGotHouses.fulfilled}`]: (state, { payload }) => {
       state.houses.results = payload.results
       state.houses.links = payload.links
+    },
+    [`${fetchGotHouseById.fulfilled}`]: (state, { payload }) => {
+      state.house = payload
     },
     [`${fetchGotCharacters.fulfilled}`]: (state, { payload }) => {
       state.characters.results = payload.results
