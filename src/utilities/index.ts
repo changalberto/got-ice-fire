@@ -50,3 +50,12 @@ export const historyPushQueryParams = (param: string, value: string): void => {
   searchParams.set(param, value)
   window.history.pushState(null, '', `?${searchParams.toString()}`)
 }
+
+/**
+ * Return the page number from url param
+ * @param uri
+ */
+export const getPageNumberFromUriParam = (uri: string | null | undefined): number => {
+  const pageNumber = new URL(uri ?? '').searchParams.get('page')
+  return pageNumber ? +pageNumber : 0
+}

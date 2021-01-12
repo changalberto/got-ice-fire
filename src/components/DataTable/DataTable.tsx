@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTable, useSortBy } from 'react-table'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 
-import { IBook } from '../../models'
-import { getBookCoverImageUrl, BookCoverSize } from '../../utilities'
-
 const namespace = 'books-table'
 
-interface BooksTableProps {
+interface DataTableProps {
   columns: any[]
-  books: IBook[]
+  data: any[]
 }
 
-const Row: React.FunctionComponent = ({ children }) => <div className={`${namespace}__row`}>{children}</div>
-
-export const BooksTable = ({ columns, books }: BooksTableProps) => {
+export const DataTable = ({ columns, data }: DataTableProps) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
-      data: books,
+      data,
     },
     useSortBy
   )
@@ -43,17 +38,6 @@ export const BooksTable = ({ columns, books }: BooksTableProps) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {/* {books.map((book: IBook, index: number) => (
-            <Row key={book.isbn}>
-              <img
-                className={`${namespace}__image`}
-                src={getBookCoverImageUrl(book.isbn, BookCoverSize.Medium)}
-                alt={book.name}
-              />
-              <span>{book.name}</span>
-            </Row>
-          ))} */}
-
           {rows.map((row, i) => {
             prepareRow(row)
             return (

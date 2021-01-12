@@ -1,19 +1,14 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'wouter'
 import { useSearchParam } from 'react-use'
 
-import {
-  getBookCoverImageUrl,
-  BookCoverSize,
-  isArrayEmptyOrNull,
-  isStringEmptyOrNull,
-  historyPushQueryParams,
-} from '../../utilities'
+import { getBookCoverImageUrl, BookCoverSize, isArrayEmptyOrNull, getPageNumberFromUriParam } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotBooks } from '../../store/actions/services.actions'
 
-import BooksTable from '../../components/BooksTable'
+import DataTable from '../../components/DataTable'
+import Pagination from '../../components/Pagination'
 
 export const HomeContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
@@ -22,6 +17,7 @@ export const HomeContainer = () => {
   const pageQuery = useSearchParam('page')
   const pageSizeQuery = useSearchParam('pageSize')
 
+  // Local State
   const [state, setState] = useState({
     currentPage: 0,
     pageSize: 0,
@@ -30,11 +26,6 @@ export const HomeContainer = () => {
     prevUri: '',
     lastUri: '',
   })
-
-  const handleGotoPageByNumber = useCallback((e: React.MouseEvent<HTMLButtonElement>, number: number) => {
-    e.preventDefault()
-    historyPushQueryParams('page', `${number}`)
-  }, [])
 
   /**
    * Filter Links for Uri by Rel value
@@ -45,16 +36,6 @@ export const HomeContainer = () => {
   const _getUriByRel = (links: any[], rel: string): string => {
     const [link]: { uri: string; rel: string }[] = links.filter((link: any) => link.rel === rel)
     return link ? link.uri : ''
-  }
-
-  /**
-   * Return the page number from url param
-   * @priave
-   * @param uri
-   */
-  const _getPageNumberFromUriParam = (uri: string): number => {
-    const pageNumber = new URL(uri).searchParams.get('page')
-    return pageNumber ? +pageNumber : 0
   }
 
   // Deeplinking query param change effect
@@ -83,7 +64,7 @@ export const HomeContainer = () => {
       const nextUri = _getUriByRel(books.links, 'next')
       const prevUri = _getUriByRel(books.links, 'prev')
       const lastUri = _getUriByRel(books.links, 'last')
-      const pageCount = _getPageNumberFromUriParam(lastUri)
+      const pageCount = getPageNumberFromUriParam(lastUri)
 
       setState(state => ({ ...state, nextUri, prevUri, lastUri, pageCount }))
     }
@@ -147,45 +128,17 @@ export const HomeContainer = () => {
   return useMemo(
     () => (
       <div className="Home">
-        {isLoading ? <p>Loading...</p> : <BooksTable columns={columns} books={books.results} />}
+        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={books.results} />}
 
-        <div className="pagination">
-          <button
-            onClick={e => handleGotoPageByNumber(e, _getPageNumberFromUriParam(state.prevUri))}
-            disabled={isStringEmptyOrNull(state.prevUri)}
-          >
-            Prev
-          </button>
-
-          {state.pageCount > 0 &&
-            Array.from(Array(state.pageCount).keys()).map(index => (
-              <button
-                key={`page-${index}`}
-                onClick={e => handleGotoPageByNumber(e, index + 1)}
-                disabled={state.currentPage === index + 1}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-          {!isStringEmptyOrNull(state.lastUri) && (
-            <button
-              onClick={e => handleGotoPageByNumber(e, _getPageNumberFromUriParam(state.lastUri))}
-              disabled={state.currentPage === _getPageNumberFromUriParam(state.lastUri)}
-            >
-              Last
-            </button>
-          )}
-
-          <button
-            onClick={e => handleGotoPageByNumber(e, _getPageNumberFromUriParam(state.nextUri))}
-            disabled={isStringEmptyOrNull(state.nextUri)}
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          pageCount={state.pageCount}
+          currentPage={state.currentPage}
+          prevUri={state.prevUri}
+          nextUri={state.nextUri}
+          lastUri={state.lastUri}
+        />
       </div>
     ),
-    [books, columns, state, handleGotoPageByNumber, isLoading]
+    [books, columns, state, isLoading]
   )
 }
