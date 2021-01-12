@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { IHouse } from '../../models'
 import { RootState, AppDispatch } from '../../store'
+import { historyGoBack } from '../../utilities'
 import { fetchGotHouseById } from '../../store/actions/services.actions'
 
 type CharacterDetailsProps = {
@@ -25,5 +26,14 @@ export const CharacterDetailsContainer = ({ params }: CharacterDetailsProps) => 
     }
   }, [id, dispatch])
 
-  return isLoading ? <p>Loading...</p> : <div className="character-details">{JSON.stringify(house)}</div>
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
+    <div className="character-details">
+      <button onClick={e => historyGoBack()}>Back</button>
+      <pre>
+        <code>{JSON.stringify(house, null, '  ')}</code>
+      </pre>
+    </div>
+  )
 }

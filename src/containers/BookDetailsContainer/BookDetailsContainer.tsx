@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { IBook } from '../../models'
 import { RootState, AppDispatch } from '../../store'
+import { historyGoBack } from '../../utilities'
 import { fetchGotBooks } from '../../store/actions/services.actions'
 
 type BookDetailsProps = {
@@ -12,6 +13,7 @@ type BookDetailsProps = {
 
 export const BookDetailsContainer = ({ params }: BookDetailsProps) => {
   const { isbn } = params
+  const { isLoading } = useSelector((state: RootState) => state.layouts)
   const dispatch: AppDispatch = useDispatch()
   // Get book cache list instead of fetching it by the uri since the array is small
   const [book] = useSelector((state: RootState) =>
@@ -34,13 +36,14 @@ export const BookDetailsContainer = ({ params }: BookDetailsProps) => {
     // }
   }, [book])
 
-  return book ? (
-    <div className="book">
-      {book.characters.map(uri => (
-        <div key={uri}>{uri}</div>
-      ))}
-    </div>
-  ) : (
+  return isLoading ? (
     <p>Loading...</p>
+  ) : (
+    <div className="book">
+      <button onClick={e => historyGoBack()}>Back</button>
+      <pre>
+        <code>{JSON.stringify(book, null, '  ')}</code>
+      </pre>
+    </div>
   )
 }

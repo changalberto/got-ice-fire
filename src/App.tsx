@@ -10,7 +10,9 @@ type NavItemProps = {
 
 const NavItem = ({ href, children }: NavItemProps) => {
   const [isActive] = useRoute(href)
-  return (
+  return isActive ? (
+    <span>{children}</span>
+  ) : (
     <Link href={href}>
       <a className={isActive ? 'active' : ''} href={href}>
         {children}

@@ -50,6 +50,12 @@ export const historyPushQueryParams = (param: string, value: string): void => {
   searchParams.set(param, value)
   window.history.pushState(null, '', `?${searchParams.toString()}`)
 }
+/**
+ * Go back in Browser History
+ */
+export const historyGoBack = (): void => {
+  window.history.back()
+}
 
 /**
  * Return the page number from url param
