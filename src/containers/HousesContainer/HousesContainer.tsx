@@ -15,7 +15,7 @@ import { fetchGotBooks } from '../../store/actions/services.actions'
 
 import BooksTable from '../../components/BooksTable'
 
-export const HomeContainer = () => {
+export const HousesContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { books } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()

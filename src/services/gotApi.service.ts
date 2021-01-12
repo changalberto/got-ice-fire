@@ -2,6 +2,7 @@ import axios from 'axios'
 import { setupCache } from 'axios-cache-adapter'
 import localforage from 'localforage'
 
+import { Pagination } from '../models'
 import { ICE_FIRE_ENDPOINT_URL, REST_CACHE_LIFE } from '../constants'
 
 const forageStore = localforage.createInstance({
@@ -15,16 +16,16 @@ const http = axios.create({
 })
 
 export const gotApi = {
-  getBooks: async () => {
-    return http.get(`${ICE_FIRE_ENDPOINT_URL}/books`)
+  getBooks: async (params?: Pagination) => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/books`, { params })
   },
-  getHouses: async () => {
-    return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses`)
+  getHouses: async (params?: Pagination) => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses`, { params })
   },
-  getCharacterById: async (id: string) => {
-    return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
+  getCharacters: async (params?: Pagination) => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters`, { params })
   },
-  getCharacterByUri: async (uri: string) => {
+  getDataByUri: async (uri: string) => {
     return http.get(uri)
   },
 }
