@@ -28,11 +28,11 @@ export const HomeContainer = () => {
   })
 
   /**
-   * Filter Links for Uri by Rel value
-   * @private
-   * @param links
-   * @param rel
-   */
+  * Filter Links for Uri by Rel value
+  * @private
+  * @param links
+  * @param rel
+  */
   const _getUriByRel = (links: any[], rel: string): string => {
     const [link]: { uri: string; rel: string }[] = links.filter((link: any) => link.rel === rel)
     return link ? link.uri : ''
