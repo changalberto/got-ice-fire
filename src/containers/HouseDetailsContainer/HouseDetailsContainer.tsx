@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Params } from 'wouter'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { IHouse } from '../../models'
@@ -9,12 +9,8 @@ import { fetchGotHouseById } from '../../store/actions/services.actions'
 
 import Page from '../../components/Page'
 
-type HouseDetailsProps = {
-  params: Params
-}
-
-export const HouseDetailsContainer = ({ params }: HouseDetailsProps) => {
-  const { id } = params
+export const HouseDetailsContainer = () => {
+  const { id } = useParams<{ id: string }>()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { house }: { house: IHouse } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'wouter'
-import { useSearchParam } from 'react-use'
+import { Link } from 'react-router-dom'
 
 import {
   getBookCoverImageUrl,
@@ -14,16 +13,18 @@ import {
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotBooks } from '../../store/actions/services.actions'
 
+import { useQuery } from '../../hooks/useQuery'
 import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
 export const HomeContainer = () => {
+  const query = useQuery()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { books } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
-  const pageQuery = useSearchParam('page')
-  const pageSizeQuery = useSearchParam('pageSize')
+  const pageQuery = query.get('page')
+  const pageSizeQuery = query.get('pageSize')
 
   // Local State
   const [state, setState] = useState({
@@ -79,7 +80,7 @@ export const HomeContainer = () => {
           } = props
           // Render Image
           return (
-            <Link href={`/book/${getLastPathnameFromUrl(original.url)}`}>
+            <Link to={`/book/${getLastPathnameFromUrl(original.url)}`}>
               <img
                 className="thumbnail"
                 src={getBookCoverImageUrl(original.isbn, BookCoverSize.Medium)}
@@ -96,7 +97,7 @@ export const HomeContainer = () => {
           const {
             row: { original },
           } = props
-          return <Link href={`/book/${getLastPathnameFromUrl(original.url)}`}>{original.name}</Link>
+          return <Link to={`/book/${getLastPathnameFromUrl(original.url)}`}>{original.name}</Link>
         },
       },
       {

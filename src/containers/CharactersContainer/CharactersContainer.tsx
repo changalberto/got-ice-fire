@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'wouter'
-import { useSearchParam } from 'react-use'
+import { Link } from 'react-router-dom'
 
 import {
   isArrayEmptyOrNull,
@@ -14,16 +13,18 @@ import { RootState, AppDispatch } from '../../store'
 import { fetchGotCharacters } from '../../store/actions/services.actions'
 import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
 
+import { useQuery } from '../../hooks/useQuery'
 import Page from '../../components/Page'
 import DataTable, { SelectColumnFilter } from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
 export const CharactersContainer = () => {
+  const query = useQuery()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { characters } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
-  const pageQuery = useSearchParam('page')
-  const pageSizeQuery = useSearchParam('pageSize')
+  const pageQuery = query.get('page')
+  const pageSizeQuery = query.get('pageSize')
 
   const [state, setState] = useState({
     currentPage: 0,
@@ -37,6 +38,7 @@ export const CharactersContainer = () => {
   // Deeplinking query param change effect
   // NOTE: Use querystring param as the source of truth to change page number
   useEffect(() => {
+    console.log(pageQuery, pageSizeQuery)
     setState(state => ({
       ...state,
       currentPage: pageQuery !== null ? +pageQuery : 1,
@@ -79,9 +81,7 @@ export const CharactersContainer = () => {
           const characterId = getLastPathnameFromUrl(original.url)
           return (
             <>
-              <Link href={`/character/${characterId}`}>
-                {isStringEmptyOrNull(original.name) ? 'N/A' : original.name}
-              </Link>
+              <Link to={`/character/${characterId}`}>{isStringEmptyOrNull(original.name) ? 'N/A' : original.name}</Link>
               {!isArrayEmptyOrNull(original.aliases) && (
                 <div className="aliases">
                   <h5>Aliases:</h5>

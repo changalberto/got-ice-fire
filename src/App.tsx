@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { HashRouter as Router } from 'react-router-dom'
 import Headroom from 'headroom.js'
 import cn from 'classnames'
 
@@ -44,15 +45,17 @@ const App = () => {
         'main-container--header-unpinned': !headerPinned,
       })}
     >
-      <PrimaryHeader ref={headerGroupRef} />
-      <main>
-        <Routes />
-      </main>
-      <footer className="footer">
-        <div className="footer__container">
-          <p className="footer__copyright">License Copyright: Unknown. </p>
-        </div>
-      </footer>
+      <Router>
+        <PrimaryHeader ref={headerGroupRef} />
+        <main>
+          <Routes />
+        </main>
+        <footer className="footer">
+          <div className="footer__container">
+            <p className="footer__copyright">License Copyright: Unknown. </p>
+          </div>
+        </footer>
+      </Router>
     </div>
   )
 }

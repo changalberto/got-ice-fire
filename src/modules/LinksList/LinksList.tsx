@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'wouter'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { gotApi } from '../../services/gotApi.service'
@@ -30,7 +30,7 @@ export const LinkCrawl = ({ uri, href, labelByProp }: LinkCrawlProps) => {
   return React.useMemo(
     () => (
       <div className="link-crawl">
-        <Link href={href}>{label}</Link>
+        <Link to={href}>{label}</Link>
       </div>
     ),
     [href, label]

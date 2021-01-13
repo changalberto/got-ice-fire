@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route } from 'wouter'
+import { Switch, Route } from 'react-router-dom'
 
 import { HomeContainer } from './containers/HomeContainer'
 import { BookDetailsContainer } from './containers/BookDetailsContainer'
@@ -10,14 +10,14 @@ import { CharacterDetailsContainer } from './containers/CharacterDetailsContaine
 
 const Routes = () => {
   return (
-    <Router>
-      <Route path="/" component={HomeContainer} />
+    <Switch>
+      <Route exact path="/" component={HomeContainer} />
       <Route path="/book/:id" component={BookDetailsContainer} />
       <Route path="/houses" component={HousesContainer} />
       <Route path="/house/:id" component={HouseDetailsContainer} />
       <Route path="/characters" component={CharactersContainer} />
       <Route path="/character/:id" component={CharacterDetailsContainer} />
-    </Router>
+    </Switch>
   )
 }
 

@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import cn from 'classnames'
 
-import { isStringEmptyOrNull, historyPushQueryParams, getPageNumberFromUriParam } from '../../utilities'
+import { isStringEmptyOrNull, getPageNumberFromUriParam } from '../../utilities'
+import { useQuery } from '../../hooks/useQuery'
 
 import './pagination.scss'
 
@@ -14,15 +16,26 @@ type PaginationProps = {
   lastUri?: string
 }
 export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri, lastUri }: PaginationProps) => {
-  const handleGotoPageByNumber = useCallback((e: React.MouseEvent<HTMLButtonElement>, number: number) => {
-    e.preventDefault()
-    historyPushQueryParams('page', `${number}`)
-  }, [])
+  const history = useHistory()
+  const query = useQuery()
 
-  const handleChangePageSize = useCallback((e: React.FormEvent<HTMLSelectElement>) => {
-    e.preventDefault()
-    historyPushQueryParams({ page: '1', pageSize: `${e.currentTarget.value}` })
-  }, [])
+  const handleGotoPageByNumber = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, number: number) => {
+      e.preventDefault()
+      query.set('page', `${number}`)
+      history.push({ search: query.toString() })
+    },
+    [query, history]
+  )
+
+  const handleChangePageSize = useCallback(
+    (e: React.FormEvent<HTMLSelectElement>) => {
+      e.preventDefault()
+      query.set('pageSize', `${e.currentTarget.value}`)
+      history.push({ search: query.toString() })
+    },
+    [query, history]
+  )
 
   return (
     <div className="pagination">

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Params } from 'wouter'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { IBook } from '../../models'
@@ -9,12 +9,12 @@ import { fetchGotBookById } from '../../store/actions/services.actions'
 
 import Page from '../../components/Page'
 
-type BookDetailsProps = {
-  params: Params
+type ParamTypes = {
+  id: string
 }
 
-export const BookDetailsContainer = ({ params }: BookDetailsProps) => {
-  const { id } = params
+export const BookDetailsContainer = () => {
+  const { id } = useParams<ParamTypes>()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { book }: { book: IBook } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()

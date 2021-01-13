@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Params } from 'wouter'
+import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ICharacter } from '../../models'
@@ -9,12 +9,8 @@ import { fetchGotCharacterById } from '../../store/actions/services.actions'
 
 import Page from '../../components/Page'
 
-type CharacterDetailsProps = {
-  params: Params
-}
-
-export const CharacterDetailsContainer = ({ params }: CharacterDetailsProps) => {
-  const { id } = params
+export const CharacterDetailsContainer = () => {
+  const { id } = useParams<{ id: string }>()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { character }: { character: ICharacter } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()

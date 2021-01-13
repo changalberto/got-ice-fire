@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'wouter'
-import { useSearchParam } from 'react-use'
+import { Link } from 'react-router-dom'
 
 import { isArrayEmptyOrNull, getPageNumberFromUriParam, getUriByRel, getLastPathnameFromUrl } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotHouses } from '../../store/actions/services.actions'
 import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
 
+import { useQuery } from '../../hooks/useQuery'
 import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
 export const HousesContainer = () => {
+  const query = useQuery()
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { houses } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
-  const pageQuery = useSearchParam('page')
-  const pageSizeQuery = useSearchParam('pageSize')
+  const pageQuery = query.get('page')
+  const pageSizeQuery = query.get('pageSize')
 
   const [state, setState] = useState({
     currentPage: 0,
@@ -71,7 +72,7 @@ export const HousesContainer = () => {
             row: { original },
           } = props
           const houseId = getLastPathnameFromUrl(original.url)
-          return <Link href={`/house/${houseId}`}>{original.name}</Link>
+          return <Link to={`/house/${houseId}`}>{original.name}</Link>
         },
       },
       {
@@ -96,6 +97,7 @@ export const HousesContainer = () => {
       {
         Header: 'Details',
         accessor: 'titles', // Array
+        maxWidth: 300,
         Cell: (props: any) => {
           const {
             row: { original },

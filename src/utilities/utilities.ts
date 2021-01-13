@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom'
 import { OPEN_LIBRARY_COVER_URL } from '../constants'
 
 export enum BookCoverSize {
@@ -39,25 +40,6 @@ export const getArrayLastItem = (array: any[]): any => (!isArrayEmptyOrNull(arra
  */
 export const isStringEmptyOrNull = (value: string | null | undefined): boolean => value === null || value?.length === 0
 
-/**
- * Push new query param to history
- * @param param {String | Object}
- * @param (Optional) value
- */
-type QueryParamsProp = {
-  [key: string]: string
-}
-export const historyPushQueryParams = (params: string | QueryParamsProp, value?: string): void => {
-  const url = new URL(`${window.location}`)
-  const searchParams = url.searchParams
-  typeof params === 'string' && value && searchParams.set(params, value)
-  if (typeof params === 'object') {
-    for (const key in params) {
-      searchParams.set(key, params[key])
-    }
-  }
-  window.history.pushState(null, '', `?${searchParams.toString()}`)
-}
 /**
  * Go back in Browser History
  */
