@@ -12,11 +12,11 @@ const Routes = () => {
   return (
     <Router>
       <Route path="/" component={HomeContainer} />
-      <Route path="/book/:isbn" component={BookDetailsContainer} />
+      <Route path="/book/:id" component={BookDetailsContainer} />
       <Route path="/houses" component={HousesContainer} />
       <Route path="/house/:id" component={HouseDetailsContainer} />
       <Route path="/characters" component={CharactersContainer} />
-      <Route path="/characters/:id" component={CharacterDetailsContainer} />
+      <Route path="/character/:id" component={CharacterDetailsContainer} />
     </Router>
   )
 }

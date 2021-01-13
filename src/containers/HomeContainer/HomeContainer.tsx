@@ -9,6 +9,7 @@ import {
   isArrayEmptyOrNull,
   getPageNumberFromUriParam,
   getUriByRel,
+  getLastPathnameFromUrl,
 } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotBooks } from '../../store/actions/services.actions'
@@ -40,7 +41,7 @@ export const HomeContainer = () => {
     setState(state => ({
       ...state,
       currentPage: pageQuery !== null ? +pageQuery : 1,
-      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 3,
+      pageSize: pageSizeQuery !== null ? +pageSizeQuery : 5,
     }))
   }, [pageQuery, pageSizeQuery])
 
@@ -78,7 +79,7 @@ export const HomeContainer = () => {
           } = props
           // Render Image
           return (
-            <Link href={`/book/${original.isbn}`}>
+            <Link href={`/book/${getLastPathnameFromUrl(original.url)}`}>
               <img
                 className="thumbnail"
                 src={getBookCoverImageUrl(original.isbn, BookCoverSize.Medium)}
@@ -95,7 +96,7 @@ export const HomeContainer = () => {
           const {
             row: { original },
           } = props
-          return <Link href={`/book/${original.isbn}`}>{original.name}</Link>
+          return <Link href={`/book/${getLastPathnameFromUrl(original.url)}`}>{original.name}</Link>
         },
       },
       {

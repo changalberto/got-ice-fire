@@ -12,6 +12,7 @@ import {
 } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotCharacters } from '../../store/actions/services.actions'
+import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
 
 import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
@@ -77,11 +78,13 @@ export const CharactersContainer = () => {
           } = props
           const characterId = getLastPathnameFromUrl(original.url)
           return (
-            <Link href={`/characters/${characterId}`}>
-              {isStringEmptyOrNull(original.name) ? 'N/A' : original.name}
-            </Link>
+            <Link href={`/character/${characterId}`}>{isStringEmptyOrNull(original.name) ? 'N/A' : original.name}</Link>
           )
         },
+      },
+      {
+        Header: 'Gender',
+        accessor: 'gender',
       },
       {
         Header: 'Culture',
@@ -106,26 +109,32 @@ export const CharactersContainer = () => {
       {
         Header: 'Father',
         accessor: 'father',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Mother',
         accessor: 'mother',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Spouse',
         accessor: 'spouse',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Allegiances',
         accessor: 'allegiances', // Array
+        Cell: (props: any) => linksCrawl(props, 'house', 'name'),
       },
       {
         Header: 'Books',
         accessor: 'books', // Array
+        Cell: (props: any) => linksCrawl(props, 'book', 'name'),
       },
       {
         Header: 'POV Books',
         accessor: 'povBooks', // Array
+        Cell: (props: any) => linksCrawl(props, 'book', 'name'),
       },
       {
         Header: 'TV Series',

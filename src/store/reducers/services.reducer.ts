@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IBook, IHouse, ICharacter } from '../../models'
 import {
   fetchGotBooks,
+  fetchGotBookById,
   fetchGotBooksByUri,
   fetchGotHouses,
   fetchGotHouseById,
@@ -35,6 +36,9 @@ export const servicesSlice = createSlice({
     [`${fetchGotBooks.fulfilled}`]: (state, { payload }) => {
       state.books.results = payload.results
       state.books.links = payload.links
+    },
+    [`${fetchGotBookById.fulfilled}`]: (state, { payload }) => {
+      state.book = payload
     },
     [`${fetchGotBooksByUri.fulfilled}`]: (state, { payload }) => {
       state.books.results = payload.results

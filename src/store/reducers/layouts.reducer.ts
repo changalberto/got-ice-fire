@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import {
   fetchGotBooks,
+  fetchGotBookById,
   fetchGotBooksByUri,
   fetchGotHouses,
   fetchGotHouseById,
@@ -32,6 +33,7 @@ export const layoutsSlice = createSlice({
   // Thunks
   extraReducers: {
     [`${fetchGotBooks.pending}`]: state => setLoadingReducer(state, true),
+    [`${fetchGotBookById.pending}`]: state => setLoadingReducer(state, true),
     [`${fetchGotBooksByUri.pending}`]: state => setLoadingReducer(state, true),
     [`${fetchGotHouses.pending}`]: state => setLoadingReducer(state, true),
     [`${fetchGotHouseById.pending}`]: state => setLoadingReducer(state, true),
@@ -39,6 +41,7 @@ export const layoutsSlice = createSlice({
     [`${fetchGotCharacterById.pending}`]: state => setLoadingReducer(state, true),
 
     [`${fetchGotBooks.fulfilled}`]: state => setLoadingReducer(state, false),
+    [`${fetchGotBookById.fulfilled}`]: state => setLoadingReducer(state, false),
     [`${fetchGotBooksByUri.fulfilled}`]: state => setLoadingReducer(state, false),
     [`${fetchGotHouses.fulfilled}`]: state => setLoadingReducer(state, false),
     [`${fetchGotHouseById.fulfilled}`]: state => setLoadingReducer(state, false),
@@ -46,6 +49,7 @@ export const layoutsSlice = createSlice({
     [`${fetchGotCharacterById.fulfilled}`]: state => setLoadingReducer(state, false),
 
     [`${fetchGotBooks.rejected}`]: state => setLoadingReducer(state, false),
+    [`${fetchGotBookById.rejected}`]: state => setLoadingReducer(state, false),
     [`${fetchGotBooksByUri.rejected}`]: state => setLoadingReducer(state, false),
     [`${fetchGotHouses.rejected}`]: state => setLoadingReducer(state, false),
     [`${fetchGotHouseById.rejected}`]: state => setLoadingReducer(state, false),

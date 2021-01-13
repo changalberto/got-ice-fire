@@ -6,6 +6,7 @@ import { useSearchParam } from 'react-use'
 import { isArrayEmptyOrNull, getPageNumberFromUriParam, getUriByRel, getLastPathnameFromUrl } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotHouses } from '../../store/actions/services.actions'
+import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
 
 import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
@@ -96,14 +97,17 @@ export const HousesContainer = () => {
       {
         Header: 'Current Lord',
         accessor: 'currentLord',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Heir',
         accessor: 'heir',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Overlord',
         accessor: 'overlord',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Founded',
@@ -112,6 +116,7 @@ export const HousesContainer = () => {
       {
         Header: 'Founder',
         accessor: 'founder',
+        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
       },
       {
         Header: 'Died Out',
@@ -124,10 +129,12 @@ export const HousesContainer = () => {
       {
         Header: 'Cadet Branches',
         accessor: 'cadetBranches', // Array
+        Cell: (props: any) => linksCrawl(props, 'house', 'name'),
       },
       {
         Header: 'Sworn Members',
         accessor: 'swornMembers', // Array
+        Cell: (props: any) => linksCrawl(props, 'character', 'name'),
       },
     ],
     []

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import cn from 'classnames'
 
 import { isStringEmptyOrNull, historyPushQueryParams, getPageNumberFromUriParam } from '../../utilities'
 
@@ -37,7 +38,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
         Array.from(Array(pageCount).keys()).map(index => (
           <button
             key={`page-${index}`}
-            className="pagination__button-page"
+            className={cn('pagination__button-page', { 'pagination__button-page--active': currentPage === index + 1 })}
             onClick={e => handleGotoPageByNumber(e, index + 1)}
             disabled={currentPage === index + 1}
           >

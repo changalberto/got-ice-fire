@@ -19,11 +19,14 @@ export const gotApi = {
   getBooks: async (params?: Pagination) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/books`, { params })
   },
+  getBookById: async (id: string) => {
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/books/${id}`)
+  },
   getHouses: async (params?: Pagination) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses`, { params })
   },
   getHouseById: async (id?: string) => {
-    return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses/${id}`)
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
   },
   getCharacters: async (params?: Pagination) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters`, { params })
@@ -31,7 +34,7 @@ export const gotApi = {
   getCharacterById: async (id?: string) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
   },
-  getDataByUri: async (uri: string) => {
-    return http.get(uri)
+  getDataByUri: async (uri: string, params = {}) => {
+    return http.get(uri, { ...params })
   },
 }

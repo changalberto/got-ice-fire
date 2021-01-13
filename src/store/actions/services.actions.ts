@@ -11,6 +11,12 @@ export const fetchGotBooks = createAsyncThunk('@fetch/fetchGotBooks', async (par
   return { results: data, links: refs }
 })
 
+export const fetchGotBookById = createAsyncThunk('@fetch/fetchGotBookById', async (id: string) => {
+  const response = await gotApi.getBookById(id)
+  const { data } = response
+  return data
+})
+
 export const fetchGotBooksByUri = createAsyncThunk('@fetch/fetchGotBooksByUri', async (uri: string) => {
   const response = await gotApi.getDataByUri(uri)
   const { data } = response

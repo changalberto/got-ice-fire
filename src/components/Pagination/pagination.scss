@@ -5,6 +5,7 @@
 
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -12,7 +13,7 @@
   button {
     @include label(menu-item);
     height: $page-button-size;
-    margin: 0 get-spacing(xs);
+    margin: get-spacing(xs);
     padding: get-spacing(xs);
     background-color: get-color(white);
     display: inline-flex;
@@ -24,6 +25,10 @@
 
   &__button-page {
     width: $page-button-size;
+
+    &--active {
+      color: get-color(secondary);
+    }
   }
 
   &__button-prev,
