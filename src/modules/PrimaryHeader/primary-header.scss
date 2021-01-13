@@ -2,10 +2,8 @@
 
 @include component('.primary-header') {
   $this: &;
-  $max-heigth: 60px;
 
   width: 100%;
-  height: $max-heigth;
   background-color: get-color(light);
   display: flex;
   align-items: center;
@@ -39,6 +37,40 @@
       &--active {
         color: get-color(secondary);
       }
+    }
+  }
+}
+
+// https://github.com/WickyNilliams/headroom.js
+// Sticky Header animation
+@include component('.headroom') {
+  $header-height: map-get($primary-header-heights, mobile);
+
+  width: 100%;
+  position: fixed;
+  top: 0;
+  will-change: transform;
+  transition: transform 200ms ease-in-out;
+  z-index: 10;
+
+  &--pinned {
+    transform: translateY(0%);
+  }
+
+  &--unpinned {
+    transform: translateY(calc(-#{$header-height}));
+  }
+
+  // Tablet and Up
+  @include media('>mobile') {
+    $header-height: map-get($primary-header-heights, desktop);
+
+    &--pinned {
+      transform: translateY(0%);
+    }
+
+    &--unpinned {
+      transform: translateY(calc(-#{$header-height}));
     }
   }
 }

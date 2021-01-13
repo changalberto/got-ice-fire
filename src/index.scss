@@ -22,6 +22,18 @@ body {
 
 main {
   @include container($direction: column);
+  $header-group-height: map-get($primary-header-heights, mobile);
+
+  --header-group-height: #{$header-group-height};
+  padding-top: var(--header-group-height);
+
+  // Tablet and Up
+  @include media('>=tablet') {
+    $header-group-height: map-get($primary-header-heights, desktop);
+
+    --header-group-height: #{$header-group-height};
+    padding-top: var(--header-group-height);
+  }
 }
 
 code {

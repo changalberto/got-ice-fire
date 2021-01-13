@@ -24,8 +24,8 @@ const NavItem = ({ href, children }: NavItemProps) => {
   )
 }
 
-export const PrimaryHeader = () => (
-  <header className="primary-header">
+export const PrimaryHeader = React.forwardRef<HTMLHeadElement>((props, ref) => (
+  <header ref={ref} className="primary-header headroom">
     <div className="primary-header__container">
       <h1 className="primary-header__title">
         <Link href="/">GOT</Link>
@@ -38,4 +38,4 @@ export const PrimaryHeader = () => (
       </nav>
     </div>
   </header>
-)
+))
