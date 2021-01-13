@@ -2,6 +2,7 @@
   "name": "got-ice-fire",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -48,7 +49,10 @@
     "lint": "yarn lint:scripts && yarn lint:styles && yarn lint:editor",
     "lint:editor": "eclint fix",
     "lint:styles": "stylelint \"./src/**/*.(scss)\" --fix",
-    "lint:scripts": "eslint --fix . --ext .ts,.tsx src"
+    "lint:scripts": "eslint --fix . --ext .ts,.tsx src",
+    "serve": "yarn build && serve -l 80 -s build",
+    "predeploy": "yarn lint && yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -81,9 +85,11 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
     "husky": "^4.3.7",
     "prettier": "^2.2.1",
     "prettier-stylelint": "^0.4.2",
+    "serve": "^11.3.2",
     "stylelint": "^13.8.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-prettier": "^1.1.2",
