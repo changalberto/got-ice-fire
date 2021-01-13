@@ -1,7 +1,21 @@
+@import './styles/core';
+
+@include universal-box-sizing();
+@include focus-visible();
+
+html,
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  scroll-padding-top: map-get($primary-header-heights, mobile);
+
+  // Desktop
+  @include media('>tablet') {
+    scroll-padding-top: map-get($primary-header-heights, desktop);
+  }
+}
+
+body {
+  font-family: get-font(body1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,0 +1,112 @@
+@mixin header($key: h3, $responsive: true) {
+  $header-sizes: (
+    mobile: (
+      h1: 30px,
+      h2: 14px,
+      h3: 21px,
+      h4: 18px,
+      h5: 16px,
+      h6: 14px,
+    ),
+    desktop: (
+      h1: 32px,
+      h2: 18px,
+      h3: 24px,
+      h4: 20px,
+      h5: 18px,
+      h6: 16px,
+    ),
+  ) !default;
+
+  $header-weights: (
+    mobile: (
+      h1: get-font-weight(bold),
+      h2: get-font-weight(bold),
+      h3: get-font-weight(bold),
+      h4: get-font-weight(bold),
+      h5: get-font-weight(bold),
+      h6: get-font-weight(bold),
+    ),
+    desktop: (
+      h1: get-font-weight(bold),
+      h2: get-font-weight(bold),
+      h3: get-font-weight(bold),
+      h4: get-font-weight(bold),
+      h5: get-font-weight(bold),
+      h6: get-font-weight(bold),
+    ),
+  ) !default;
+
+  font-family: get-font(header);
+  font-size: map-get(map-get($header-sizes, mobile), $key);
+  font-weight: map-get(map-get($header-weights, mobile), $key);
+  line-height: 1.1;
+
+  @if $responsive {
+    @include media('>tablet') {
+      font-size: map-get(map-get($header-sizes, desktop), $key);
+      font-weight: map-get(map-get($header-weights, desktop), $key);
+    }
+  }
+}
+
+/**
+ * Usage @include label(default)
+ */
+@mixin label($key: default, $responsive: true) {
+  $label-sizes: (
+    mobile: (
+      default: 14px,
+      table-header: 12px,
+      table-data: 12px,
+      medium-regular: 14px,
+      medium-semibold: 14px,
+      menu-item: 14px,
+      nav-item: 14px,
+      input: 14px,
+    ),
+    desktop: (
+      default: 16px,
+      table-header: 14px,
+      table-data: 14px,
+      medium-regular: 14px,
+      medium-semibold: 14px,
+      menu-item: 14px,
+      nav-item: 14px,
+      input: 14px,
+    ),
+  ) !default;
+
+  $label-weight: (
+    mobile: (
+      default: get-font-weight(medium),
+      table-header: get-font-weight(semiBold),
+      table-data: get-font-weight(regular),
+      medium-regular: get-font-weight(regular),
+      medium-semibold: get-font-weight(semiBold),
+      menu-item: get-font-weight(regular),
+      nav-item: get-font-weight(semiBold),
+    ),
+    desktop: (
+      default: get-font-weight(medium),
+      table-header: get-font-weight(semiBold),
+      table-data: get-font-weight(regular),
+      medium-regular: get-font-weight(regular),
+      medium-semibold: get-font-weight(semiBold),
+      menu-item: get-font-weight(regular),
+      nav-item: get-font-weight(semiBold),
+    ),
+  ) !default;
+
+  font-family: get-font(label);
+  font-size: map-get(map-get($label-sizes, mobile), $key);
+  font-weight: map-get(map-get($label-weight, mobile), $key);
+  line-height: 1.15;
+
+  @if $responsive {
+    @include media('>tablet') {
+      font-size: map-get(map-get($label-sizes, desktop), $key);
+      font-weight: map-get(map-get($label-weight, desktop), $key);
+    }
+  }
+}

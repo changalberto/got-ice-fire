@@ -1,0 +1,23 @@
+@function get-color($key, $map: $colors) {
+  @return map-get($map: $map, $key: $key);
+}
+
+@function get-gutter($key, $map: map-get($grid-settings, gutters)) {
+  @return map-get($map: $map, $key: $key);
+}
+
+@function get-font($key, $map: $fonts) {
+  @return map-get($map: $map, $key: $key);
+}
+
+@function get-font-weight($key, $map: $font-weights) {
+  @return map-get($map: $map, $key: $key);
+}
+
+@function get-spacing($key, $breakpoint: mobile, $map: $universal-spacing) {
+  @return map-get($map: map-get($map, $breakpoint), $key: $key);
+}
+
+@function get-shadow($key, $map: $elevation-shadows) {
+  @return map-get($map: $map, $key: $key);
+}

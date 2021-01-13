@@ -1,0 +1,30 @@
+// https://eduardoboucas.github.io/include-media/#overview
+// Breakpoints for _breakpoints.scss
+$breakpoints: (
+  mobile: 428px,
+  tablet: 768px,
+  desktop: 1024px,
+) !default;
+
+// Grid settings for _grid.scss
+$grid-settings: (
+  max-width: 1440px,
+  gutters: (
+    mobile: 18px,
+    tablet: 20px,
+    desktop: 20px,
+  ),
+) !default;
+
+// Header Heights
+$primary-header-heights: (
+  mobile: 50px,
+  tablet: 60px,
+  desktop: 60px,
+) !default;
+
+$secondary-header-heights: (
+  mobile: 50px,
+  tablet: 54px,
+  desktop: 54px,
+) !default;

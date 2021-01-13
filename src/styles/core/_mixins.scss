@@ -1,0 +1,38 @@
+/**
+ * https://css-tricks.com/box-sizing/
+ */
+@mixin universal-box-sizing() {
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+}
+
+/**
+ * Components styles helper mixin
+ */
+@mixin component($name, $this: &) {
+  #{$name} {
+    $this: &;
+    @content;
+  }
+}
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible
+ * Disable focus outline on clicks
+ */
+@mixin focus-visible() {
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 3px solid get-color(cyan);
+  }
+}

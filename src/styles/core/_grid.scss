@@ -1,0 +1,26 @@
+// https://eduardoboucas.github.io/include-media/#overview
+@import '~include-media/dist/_include-media.scss';
+
+@mixin container($direction: row, $display: flex) {
+  width: 100%;
+  max-width: map-get($grid-settings, max-width);
+  margin: 0 auto;
+  display: $display;
+  flex-direction: $direction;
+  position: relative;
+
+  @include media('<=mobile') {
+    padding-left: get-gutter(mobile);
+    padding-right: get-gutter(mobile);
+  }
+
+  @include media('>mobile', '<=tablet') {
+    padding-left: get-gutter(tablet);
+    padding-right: get-gutter(tablet);
+  }
+
+  @include media('>tablet') {
+    padding-left: get-gutter(desktop);
+    padding-right: get-gutter(desktop);
+  }
+}
