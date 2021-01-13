@@ -1,0 +1,9 @@
+@import '../../styles/core';
+
+@include component('.data-table') {
+  $this: &;
+  $sort-icon-size: 16px;
+
+  width: 100%;
+  border-collapse: collapse;
+}

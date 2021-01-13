@@ -2,7 +2,9 @@ import React from 'react'
 import { useTable, useSortBy } from 'react-table'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 
-const namespace = 'books-table'
+import './data-table.scss'
+
+const namespace = 'data-table'
 
 interface DataTableProps {
   columns: any[]
