@@ -44,10 +44,18 @@ export const isStringEmptyOrNull = (value: string | null | undefined): boolean =
  * @param param
  * @param value
  */
-export const historyPushQueryParams = (param: string, value: string): void => {
+type QueryParamsProp = {
+  [key: string]: string
+}
+export const historyPushQueryParams = (params: string | QueryParamsProp, value?: string): void => {
   const url = new URL(`${window.location}`)
   const searchParams = url.searchParams
-  searchParams.set(param, value)
+  typeof params === 'string' && value && searchParams.set(params, value)
+  if (typeof params === 'object') {
+    for (const key in params) {
+      searchParams.set(key, params[key])
+    }
+  }
   window.history.pushState(null, '', `?${searchParams.toString()}`)
 }
 /**

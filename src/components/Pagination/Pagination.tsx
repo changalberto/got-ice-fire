@@ -18,7 +18,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
 
   const handleChangePageSize = useCallback((e: React.FormEvent<HTMLSelectElement>) => {
     e.preventDefault()
-    historyPushQueryParams('pageSize', `${e.currentTarget.value}`)
+    historyPushQueryParams({ page: '1', pageSize: `${e.currentTarget.value}` })
   }, [])
 
   return (
