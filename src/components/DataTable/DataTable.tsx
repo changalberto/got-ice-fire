@@ -1,6 +1,8 @@
 import React from 'react'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, useFilters } from 'react-table'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
+
+import { isStringEmptyOrNull } from '../../utilities'
 
 import './data-table.scss'
 
@@ -19,6 +21,7 @@ export const DataTable = ({ columns, data, initialState }: DataTableProps) => {
       data,
       initialState,
     },
+    useFilters,
     useSortBy
   )
 
@@ -36,6 +39,7 @@ export const DataTable = ({ columns, data, initialState }: DataTableProps) => {
                       {column?.isSortedDesc ? <TiArrowSortedDown /> : <TiArrowSortedUp />}
                     </span>
                   )}
+                  {column?.canFilter && column.filter && column.render('Filter')}
                 </th>
               ))}
             </tr>
@@ -55,5 +59,32 @@ export const DataTable = ({ columns, data, initialState }: DataTableProps) => {
         </tbody>
       </table>
     </div>
+  )
+}
+
+export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }: any) => {
+  const options = React.useMemo(() => {
+    const options: any = new Set()
+    preFilteredRows.forEach((row: any) => {
+      !isStringEmptyOrNull(row.values[id]) && options.add(row.values[id])
+    })
+    return [...options]
+  }, [id, preFilteredRows])
+
+  return (
+    <select
+      value={filterValue}
+      onChange={e => e.currentTarget.blur()}
+      onBlur={e => {
+        setFilter(e.target.value || undefined)
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   )
 }

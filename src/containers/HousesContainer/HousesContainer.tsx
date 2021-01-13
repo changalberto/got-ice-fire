@@ -79,62 +79,58 @@ export const HousesContainer = () => {
         accessor: 'region',
       },
       {
-        Header: 'Coat of Arms',
-        accessor: 'coatOfArms',
-      },
-      {
-        Header: 'Words',
-        accessor: 'words',
-      },
-      {
-        Header: 'Titles',
-        accessor: 'titles', // Array
-      },
-      {
-        Header: 'Seats',
-        accessor: 'seats', // Array
+        Header: 'Overlord',
+        accessor: 'overlord',
+        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
       },
       {
         Header: 'Current Lord',
         accessor: 'currentLord',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
+        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
       },
       {
         Header: 'Heir',
         accessor: 'heir',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
+        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
       },
       {
-        Header: 'Overlord',
-        accessor: 'overlord',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
-      },
-      {
-        Header: 'Founded',
-        accessor: 'founded',
-      },
-      {
-        Header: 'Founder',
-        accessor: 'founder',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
-      },
-      {
-        Header: 'Died Out',
-        accessor: 'diedOut',
-      },
-      {
-        Header: 'Ancestral Weapons',
-        accessor: 'ancestralWeapons', // Array
-      },
-      {
-        Header: 'Cadet Branches',
-        accessor: 'cadetBranches', // Array
-        Cell: (props: any) => linksCrawl(props, 'house', 'name'),
-      },
-      {
-        Header: 'Sworn Members',
-        accessor: 'swornMembers', // Array
-        Cell: (props: any) => linksCrawl(props, 'character', 'name'),
+        Header: 'Details',
+        accessor: 'titles', // Array
+        Cell: (props: any) => {
+          const {
+            row: { original },
+          } = props
+          return (
+            <>
+              <div className="founded">
+                <h3>Founded</h3>
+                {original.founded ?? 'N/A'}
+              </div>
+              <div className="founder">
+                <h3>Founder</h3>
+                {original.founder ? linkCrawl(original.founder, 'character', 'name') : 'N/A'}
+              </div>
+              <div className="titles">
+                <h3>Titles</h3>
+                {!isArrayEmptyOrNull(original.titles)
+                  ? original.titles.map((title: string) => <p key={title}>{title}</p>)
+                  : 'N/A'}
+              </div>
+              <div className="coat-of-arms">
+                <h3>Coat of Arms</h3>
+                {original.coatOfArms}
+              </div>
+              <div className="words">
+                <h3>Words</h3>
+                {original.words}
+              </div>
+              <div className="sworn-members">
+                <h3>Sworn Members</h3>
+                {original.swornMembers ? linksCrawl(original.swornMembers, 'character', 'name') : 'N/A'}
+              </div>
+            </>
+          )
+        },
       },
     ],
     []

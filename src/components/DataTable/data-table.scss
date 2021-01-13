@@ -20,11 +20,13 @@
   }
 
   th {
-    padding: get-spacing(sm);
+    padding: get-spacing(md) get-spacing(sm);
+    border-bottom: 1px solid get-color(border);
   }
 
   td {
-    padding: get-spacing(sm);
+    padding: get-spacing(md) get-spacing(sm);
     vertical-align: top;
+    border-bottom: 1px solid get-color(border);
   }
 }

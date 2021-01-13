@@ -15,7 +15,7 @@ import { fetchGotCharacters } from '../../store/actions/services.actions'
 import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
 
 import Page from '../../components/Page'
-import DataTable from '../../components/DataTable'
+import DataTable, { SelectColumnFilter } from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
 export const CharactersContainer = () => {
@@ -78,72 +78,84 @@ export const CharactersContainer = () => {
           } = props
           const characterId = getLastPathnameFromUrl(original.url)
           return (
-            <Link href={`/character/${characterId}`}>{isStringEmptyOrNull(original.name) ? 'N/A' : original.name}</Link>
+            <>
+              <Link href={`/character/${characterId}`}>
+                {isStringEmptyOrNull(original.name) ? 'N/A' : original.name}
+              </Link>
+              {!isArrayEmptyOrNull(original.aliases) && (
+                <div className="aliases">
+                  <h5>Aliases:</h5>
+                  {original.aliases.map((alias: string) => (
+                    <p key={alias}>{alias}</p>
+                  ))}
+                </div>
+              )}
+            </>
           )
         },
       },
       {
         Header: 'Gender',
         accessor: 'gender',
+        Filter: SelectColumnFilter,
+        disableSortBy: true,
+        filter: 'includes',
       },
       {
         Header: 'Culture',
         accessor: 'culture',
+        Filter: SelectColumnFilter,
+        disableSortBy: true,
+        filter: 'includes',
       },
       {
-        Header: 'Born',
-        accessor: 'born',
-      },
-      {
-        Header: 'Died',
-        accessor: 'died',
-      },
-      {
-        Header: 'Titles',
-        accessor: 'titles', // Array
-      },
-      {
-        Header: 'Aliases',
-        accessor: 'aliases', // Array
-      },
-      {
-        Header: 'Father',
+        Header: 'Family',
         accessor: 'father',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
-      },
-      {
-        Header: 'Mother',
-        accessor: 'mother',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
-      },
-      {
-        Header: 'Spouse',
-        accessor: 'spouse',
-        Cell: (props: any) => linkCrawl(props, 'character', 'name'),
+        Cell: (props: any) => {
+          const {
+            row: { original },
+          } = props
+          return (
+            <div>
+              {!isStringEmptyOrNull(original.father) && (
+                <span>Father {linkCrawl(original.father, 'character', 'name')}</span>
+              )}
+              {!isStringEmptyOrNull(original.mother) && (
+                <span>Mother {linkCrawl(original.mother, 'character', 'name')}</span>
+              )}
+              {!isStringEmptyOrNull(original.spouse) && (
+                <span>Spouse {linkCrawl(original.spouse, 'character', 'name')}</span>
+              )}
+            </div>
+          )
+        },
       },
       {
         Header: 'Allegiances',
         accessor: 'allegiances', // Array
-        Cell: (props: any) => linksCrawl(props, 'house', 'name'),
+        Cell: (props: any) => linksCrawl(props.value, 'house', 'name'),
       },
       {
         Header: 'Books',
         accessor: 'books', // Array
-        Cell: (props: any) => linksCrawl(props, 'book', 'name'),
+        Cell: (props: any) => linksCrawl(props.value, 'book', 'name'),
+        Filter: SelectBookFilter,
+        filter: 'includes',
+        disableSortBy: true,
       },
       {
         Header: 'POV Books',
         accessor: 'povBooks', // Array
-        Cell: (props: any) => linksCrawl(props, 'book', 'name'),
+        Cell: (props: any) => linksCrawl(props.value, 'book', 'name'),
       },
-      {
-        Header: 'TV Series',
-        accessor: 'tvSeries', // Array
-      },
-      {
-        Header: 'Played By',
-        accessor: 'playedBy', // Array
-      },
+      // {
+      //   Header: 'TV Series',
+      //   accessor: 'tvSeries', // Array
+      // },
+      // {
+      //   Header: 'Played By',
+      //   accessor: 'playedBy', // Array
+      // },
     ],
     []
   )
@@ -163,5 +175,35 @@ export const CharactersContainer = () => {
       </Page>
     ),
     [characters, columns, state, isLoading]
+  )
+}
+
+export const SelectBookFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }: any) => {
+  const options = React.useMemo(() => {
+    const options: any = new Set()
+    preFilteredRows.forEach((row: any) => {
+      !isArrayEmptyOrNull(row.values[id]) &&
+        row.values[id].forEach((bookUri: string) => {
+          options.add(bookUri)
+        })
+    })
+    return [...options]
+  }, [id, preFilteredRows])
+
+  return (
+    <select
+      value={filterValue}
+      onChange={e => e.currentTarget.blur()}
+      onBlur={e => {
+        setFilter(e.target.value || undefined)
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i} value={option}>
+          {`Book ${getLastPathnameFromUrl(option)}`}
+        </option>
+      ))}
+    </select>
   )
 }

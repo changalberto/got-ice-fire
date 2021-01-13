@@ -1,1 +1,1 @@
-export { DataTable as default } from './DataTable'
+export { DataTable as default, SelectColumnFilter } from './DataTable'

@@ -13,7 +13,7 @@ type PageProps = {
 
 export const Page = ({ title, children, isLoading, className }: PageProps) => {
   return (
-    <div className={cn('page', { className })}>
+    <div className={cn('page', { [`${className}`]: className })}>
       {isLoading ? (
         <Loader />
       ) : (
