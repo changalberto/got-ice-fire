@@ -41,8 +41,8 @@ export const isStringEmptyOrNull = (value: string | null | undefined): boolean =
 
 /**
  * Push new query param to history
- * @param param
- * @param value
+ * @param param {String | Object}
+ * @param (Optional) value
  */
 type QueryParamsProp = {
   [key: string]: string

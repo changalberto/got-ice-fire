@@ -13,6 +13,7 @@ import {
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotBooks } from '../../store/actions/services.actions'
 
+import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
@@ -78,7 +79,11 @@ export const HomeContainer = () => {
           // Render Image
           return (
             <Link href={`/book/${original.isbn}`}>
-              <img src={getBookCoverImageUrl(original.isbn, BookCoverSize.Medium)} alt={original.name} />
+              <img
+                className="thumbnail"
+                src={getBookCoverImageUrl(original.isbn, BookCoverSize.Medium)}
+                alt={original.name}
+              />
             </Link>
           )
         },
@@ -86,6 +91,12 @@ export const HomeContainer = () => {
       {
         Header: 'Title',
         accessor: 'name',
+        Cell: (props: any) => {
+          const {
+            row: { original },
+          } = props
+          return <Link href={`/book/${original.isbn}`}>{original.name}</Link>
+        },
       },
       {
         Header: 'Authors',
@@ -120,10 +131,21 @@ export const HomeContainer = () => {
     []
   )
 
-  return useMemo(
+  return React.useMemo(
     () => (
-      <div className="home">
-        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={books.results} />}
+      <Page title="GOT | Books" className="books" isLoading={isLoading}>
+        <DataTable
+          columns={columns}
+          data={books.results}
+          initialState={{
+            sortBy: [
+              {
+                id: 'name',
+                desc: false,
+              },
+            ],
+          }}
+        />
 
         <Pagination
           pageCount={state.pageCount}
@@ -133,8 +155,8 @@ export const HomeContainer = () => {
           nextUri={state.nextUri}
           lastUri={state.lastUri}
         />
-      </div>
+      </Page>
     ),
-    [books, columns, state, isLoading]
+    [books, columns, isLoading, state]
   )
 }

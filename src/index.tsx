@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { HelmetProvider } from 'react-helmet-async'
 
 import 'normalize.css'
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -12,7 +14,9 @@ import store from './store'
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

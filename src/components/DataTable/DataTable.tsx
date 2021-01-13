@@ -9,13 +9,15 @@ const namespace = 'data-table'
 interface DataTableProps {
   columns: any[]
   data: any[]
+  initialState?: any
 }
 
-export const DataTable = ({ columns, data }: DataTableProps) => {
+export const DataTable = ({ columns, data, initialState }: DataTableProps) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
       data,
+      initialState,
     },
     useSortBy
   )

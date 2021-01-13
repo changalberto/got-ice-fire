@@ -34,8 +34,24 @@ main {
     --header-group-height: #{$header-group-height};
     padding-top: var(--header-group-height);
   }
+
+  padding-bottom: get-spacing(xxl);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+@include component('.footer') {
+  background-color: get-color(light);
+  padding: get-spacing(md) 0;
+  display: flex;
+
+  &__container {
+    @include container($direction: row);
+  }
+
+  &__copyright {
+    @include label(small);
+  }
 }

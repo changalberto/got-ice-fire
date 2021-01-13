@@ -7,6 +7,8 @@ import { RootState, AppDispatch } from '../../store'
 import { historyGoBack } from '../../utilities'
 import { fetchGotHouseById } from '../../store/actions/services.actions'
 
+import Page from '../../components/Page'
+
 type HouseDetailsProps = {
   params: Params
 }
@@ -16,7 +18,6 @@ export const HouseDetailsContainer = ({ params }: HouseDetailsProps) => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { house }: { house: IHouse } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
-  console.log('HouseDetails Id', id)
 
   // Fetch character details
   useEffect(() => {
@@ -26,12 +27,15 @@ export const HouseDetailsContainer = ({ params }: HouseDetailsProps) => {
     }
   }, [id, dispatch])
 
-  return isLoading ? (
-    <p>Loading...</p>
-  ) : (
-    <div className="house-details">
-      <button onClick={e => historyGoBack()}>Back</button>
-      {JSON.stringify(house)}
-    </div>
+  return React.useMemo(
+    () => (
+      <Page title={`GOT | House: ${house?.name}`} className="house-details" isLoading={isLoading}>
+        <button onClick={e => historyGoBack()}>Back</button>
+        <pre>
+          <code>{JSON.stringify(house, null, '  ')}</code>
+        </pre>
+      </Page>
+    ),
+    [house, isLoading]
   )
 }

@@ -2,6 +2,8 @@ import React, { useCallback } from 'react'
 
 import { isStringEmptyOrNull, historyPushQueryParams, getPageNumberFromUriParam } from '../../utilities'
 
+import './pagination.scss'
+
 type PaginationProps = {
   currentPage: number
   pageCount: number
@@ -24,6 +26,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
   return (
     <div className="pagination">
       <button
+        className="pagination__button-prev"
         onClick={e => handleGotoPageByNumber(e, getPageNumberFromUriParam(prevUri))}
         disabled={isStringEmptyOrNull(prevUri)}
       >
@@ -34,6 +37,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
         Array.from(Array(pageCount).keys()).map(index => (
           <button
             key={`page-${index}`}
+            className="pagination__button-page"
             onClick={e => handleGotoPageByNumber(e, index + 1)}
             disabled={currentPage === index + 1}
           >
@@ -43,6 +47,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
 
       {!isStringEmptyOrNull(lastUri) && (
         <button
+          className="pagination__button-last"
           onClick={e => handleGotoPageByNumber(e, getPageNumberFromUriParam(lastUri))}
           disabled={currentPage === getPageNumberFromUriParam(lastUri)}
         >
@@ -51,6 +56,7 @@ export const Pagination = ({ pageCount, currentPage, pageSize, prevUri, nextUri,
       )}
 
       <button
+        className="pagination__button-next"
         onClick={e => handleGotoPageByNumber(e, getPageNumberFromUriParam(nextUri))}
         disabled={isStringEmptyOrNull(nextUri)}
       >

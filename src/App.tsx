@@ -48,6 +48,11 @@ const App = () => {
       <main>
         <Routes />
       </main>
+      <footer className="footer">
+        <div className="footer__container">
+          <p className="footer__copyright">License Copyright: Unknown. </p>
+        </div>
+      </footer>
     </div>
   )
 }

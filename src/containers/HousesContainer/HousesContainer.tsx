@@ -7,6 +7,7 @@ import { isArrayEmptyOrNull, getPageNumberFromUriParam, getUriByRel, getLastPath
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotHouses } from '../../store/actions/services.actions'
 
+import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
@@ -132,11 +133,10 @@ export const HousesContainer = () => {
     []
   )
 
-  return useMemo(
+  return React.useMemo(
     () => (
-      <div className="house">
-        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={houses.results} />}
-
+      <Page title="GOT | Houses" className="houses" isLoading={isLoading}>
+        <DataTable columns={columns} data={houses.results} />
         <Pagination
           pageCount={state.pageCount}
           currentPage={state.currentPage}
@@ -145,8 +145,8 @@ export const HousesContainer = () => {
           nextUri={state.nextUri}
           lastUri={state.lastUri}
         />
-      </div>
+      </Page>
     ),
-    [houses, columns, state, isLoading]
+    [houses, columns, isLoading, state]
   )
 }

@@ -1,0 +1,46 @@
+@import '../../styles/core';
+
+@include component('.pagination') {
+  $page-button-size: 30px;
+
+  width: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    @include label(menu-item);
+    height: $page-button-size;
+    margin: 0 get-spacing(xs);
+    padding: get-spacing(xs);
+    background-color: get-color(white);
+    display: inline-flex;
+    border: 1px solid get-color(border);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__button-page {
+    width: $page-button-size;
+  }
+
+  &__button-prev,
+  &__button-next,
+  &__button-last {
+    padding: get-spacing(xs) get-spacing(md) !important;
+  }
+
+  select {
+    @include label(menu-item);
+    height: $page-button-size;
+    margin: 0 get-spacing(xs);
+    padding: get-spacing(xs);
+    background-color: get-color(white);
+    display: inline-flex;
+    border: 1px solid get-color(border);
+    align-items: center;
+    justify-content: center;
+  }
+}

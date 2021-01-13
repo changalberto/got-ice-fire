@@ -3,7 +3,28 @@
 @include component('.data-table') {
   $this: &;
   $sort-icon-size: 16px;
+  $thumbnail-size: 80px;
 
   width: 100%;
-  border-collapse: separate;
+  padding: get-spacing(lg) 0;
+  text-align: left;
+
+  .thumbnail {
+    width: $thumbnail-size;
+    display: block;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+  }
+
+  th {
+    padding: get-spacing(sm);
+  }
+
+  td {
+    padding: get-spacing(sm);
+    vertical-align: top;
+  }
 }

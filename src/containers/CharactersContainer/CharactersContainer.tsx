@@ -13,6 +13,7 @@ import {
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotCharacters } from '../../store/actions/services.actions'
 
+import Page from '../../components/Page'
 import DataTable from '../../components/DataTable'
 import Pagination from '../../components/Pagination'
 
@@ -82,15 +83,66 @@ export const CharactersContainer = () => {
           )
         },
       },
+      {
+        Header: 'Culture',
+        accessor: 'culture',
+      },
+      {
+        Header: 'Born',
+        accessor: 'born',
+      },
+      {
+        Header: 'Died',
+        accessor: 'died',
+      },
+      {
+        Header: 'Titles',
+        accessor: 'titles', // Array
+      },
+      {
+        Header: 'Aliases',
+        accessor: 'aliases', // Array
+      },
+      {
+        Header: 'Father',
+        accessor: 'father',
+      },
+      {
+        Header: 'Mother',
+        accessor: 'mother',
+      },
+      {
+        Header: 'Spouse',
+        accessor: 'spouse',
+      },
+      {
+        Header: 'Allegiances',
+        accessor: 'allegiances', // Array
+      },
+      {
+        Header: 'Books',
+        accessor: 'books', // Array
+      },
+      {
+        Header: 'POV Books',
+        accessor: 'povBooks', // Array
+      },
+      {
+        Header: 'TV Series',
+        accessor: 'tvSeries', // Array
+      },
+      {
+        Header: 'Played By',
+        accessor: 'playedBy', // Array
+      },
     ],
     []
   )
 
   return useMemo(
     () => (
-      <div className="characters">
-        {isLoading ? <p>Loading...</p> : <DataTable columns={columns} data={characters.results} />}
-
+      <Page title="GOT | Characters" className="characters" isLoading={isLoading}>
+        <DataTable columns={columns} data={characters.results} />
         <Pagination
           pageCount={state.pageCount}
           currentPage={state.currentPage}
@@ -99,7 +151,7 @@ export const CharactersContainer = () => {
           nextUri={state.nextUri}
           lastUri={state.lastUri}
         />
-      </div>
+      </Page>
     ),
     [characters, columns, state, isLoading]
   )

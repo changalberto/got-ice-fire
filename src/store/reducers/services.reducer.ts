@@ -5,8 +5,9 @@ import {
   fetchGotBooks,
   fetchGotBooksByUri,
   fetchGotHouses,
-  fetchGotCharacters,
   fetchGotHouseById,
+  fetchGotCharacters,
+  fetchGotCharacterById,
 } from '../actions/services.actions'
 
 export const servicesSlice = createSlice({
@@ -49,6 +50,9 @@ export const servicesSlice = createSlice({
     [`${fetchGotCharacters.fulfilled}`]: (state, { payload }) => {
       state.characters.results = payload.results
       state.characters.links = payload.links
+    },
+    [`${fetchGotCharacterById.fulfilled}`]: (state, { payload }) => {
+      state.character = payload
     },
   },
 })
