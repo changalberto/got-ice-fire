@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom'
 import { OPEN_LIBRARY_COVER_URL } from '../constants'
 
 export enum BookCoverSize {
