@@ -5,10 +5,12 @@ import Routes from './Routes'
 
 const App = () => {
   return (
-    <>
+    <div className="main-container">
       <PrimaryHeader />
-      <Routes />
-    </>
+      <main>
+        <Routes />
+      </main>
+    </div>
   )
 }
 

@@ -1,0 +1,44 @@
+@import '../../styles/core';
+
+@include component('.primary-header') {
+  $this: &;
+  $max-heigth: 60px;
+
+  width: 100%;
+  height: $max-heigth;
+  background-color: get-color(light);
+  display: flex;
+  align-items: center;
+
+  // Inner Container
+  &__container {
+    @include container($direction: row);
+  }
+
+  &__title {
+    @include header(h3);
+    margin-right: get-spacing(xxl);
+
+    a {
+      color: get-color(primary);
+      text-decoration: none;
+    }
+  }
+
+  &__nav {
+    @include label(nav-item);
+    color: get-color(primary);
+    display: inline-flex;
+    align-items: center;
+
+    &__item {
+      margin: 0 get-spacing(md);
+      display: inline-flex;
+      color: get-color(primary);
+
+      &--active {
+        color: get-color(secondary);
+      }
+    }
+  }
+}

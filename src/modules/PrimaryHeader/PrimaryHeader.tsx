@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link, useRoute } from 'wouter'
+import cn from 'classnames'
+
+import './primary-header.scss'
 
 type NavItemProps = {
   href: string
@@ -9,10 +12,12 @@ type NavItemProps = {
 const NavItem = ({ href, children }: NavItemProps) => {
   const [isActive] = useRoute(href)
   return isActive ? (
-    <span>{children}</span>
+    <span className={cn('primary-header__nav__item', { 'primary-header__nav__item--active': isActive })}>
+      {children}
+    </span>
   ) : (
     <Link href={href}>
-      <a className={isActive ? 'active' : ''} href={href}>
+      <a className={cn('primary-header__nav__item', { 'primary-header__nav__item--active': isActive })} href={href}>
         {children}
       </a>
     </Link>
@@ -20,9 +25,17 @@ const NavItem = ({ href, children }: NavItemProps) => {
 }
 
 export const PrimaryHeader = () => (
-  <nav>
-    <NavItem href="/">Books</NavItem>
-    <NavItem href="/houses">Houses</NavItem>
-    <NavItem href="/characters">Characters</NavItem>
-  </nav>
+  <header className="primary-header">
+    <div className="primary-header__container">
+      <h1 className="primary-header__title">
+        <Link href="/">GOT</Link>
+      </h1>
+
+      <nav className="primary-header__nav">
+        <NavItem href="/">Books</NavItem>
+        <NavItem href="/houses">Houses</NavItem>
+        <NavItem href="/characters">Characters</NavItem>
+      </nav>
+    </div>
+  </header>
 )
