@@ -8,6 +8,7 @@ import {
   getUriByRel,
   getLastPathnameFromUrl,
   isStringEmptyOrNull,
+  getStringValueOrNa,
 } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotCharacters } from '../../store/actions/services.actions'
@@ -80,7 +81,9 @@ export const CharactersContainer = () => {
           const characterId = getLastPathnameFromUrl(original.url)
           return (
             <>
-              <Link to={`/character/${characterId}`}>{isStringEmptyOrNull(original.name) ? 'N/A' : original.name}</Link>
+              <Link className="link" to={`/character/${characterId}`}>
+                {getStringValueOrNa(original.name)}
+              </Link>
               {!isArrayEmptyOrNull(original.aliases) && (
                 <div className="aliases">
                   <h5>Aliases:</h5>
