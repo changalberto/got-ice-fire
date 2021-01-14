@@ -30,7 +30,9 @@ export const LinkCrawl = ({ uri, href, labelByProp }: LinkCrawlProps) => {
   return React.useMemo(
     () => (
       <div className="link-crawl">
-        <Link to={href}>{label}</Link>
+        <Link className="link" to={href}>
+          {label}
+        </Link>
       </div>
     ),
     [href, label]

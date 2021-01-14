@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { format } from 'date-fns'
 
 import {
   getBookCoverImageUrl,
@@ -97,7 +98,11 @@ export const HomeContainer = () => {
           const {
             row: { original },
           } = props
-          return <Link to={`/book/${getLastPathnameFromUrl(original.url)}`}>{original.name}</Link>
+          return (
+            <Link className="link" to={`/book/${getLastPathnameFromUrl(original.url)}`}>
+              {original.name}
+            </Link>
+          )
         },
       },
       {
@@ -107,6 +112,7 @@ export const HomeContainer = () => {
       {
         Header: 'Release Date',
         accessor: 'released',
+        Cell: (props: any) => format(new Date(props.value), 'MM/dd/yyyy'),
       },
       {
         Header: 'Publisher',

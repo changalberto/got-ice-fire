@@ -38,7 +38,6 @@ export const CharactersContainer = () => {
   // Deeplinking query param change effect
   // NOTE: Use querystring param as the source of truth to change page number
   useEffect(() => {
-    console.log(pageQuery, pageSizeQuery)
     setState(state => ({
       ...state,
       currentPage: pageQuery !== null ? +pageQuery : 1,

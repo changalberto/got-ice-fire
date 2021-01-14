@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { HelmetProvider } from 'react-helmet-async'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 
 import 'normalize.css'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
@@ -11,11 +12,19 @@ import reportWebVitals from './reportWebVitals'
 
 import store from './store'
 
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
+  },
+})
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <HelmetProvider>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </HelmetProvider>
     </Provider>
   </React.StrictMode>,

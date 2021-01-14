@@ -10,7 +10,7 @@ export const linkCrawl = (value: string, baseHref: string, labelByProp: string) 
   )
 }
 
-export const linksCrawl = (array: [], baseHref: string, labelByProp: string) => {
+export const linksCrawl = (array: string[], baseHref: string, labelByProp: string) => {
   const uriArray = array
   return !isArrayEmptyOrNull(uriArray)
     ? uriArray.map((uri: string, index: number) => (

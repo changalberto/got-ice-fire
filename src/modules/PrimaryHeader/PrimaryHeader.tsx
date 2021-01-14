@@ -11,13 +11,17 @@ export const PrimaryHeader = React.forwardRef<HTMLHeadElement>((props, ref) => (
       </h1>
 
       <nav className="primary-header__nav">
-        <NavLink to="/" activeClassName="active">
+        <NavLink exact to="/" className="primary-header__nav__item" activeClassName="primary-header__nav__item--active">
           Books
         </NavLink>
-        <NavLink to="/houses" activeClassName="active">
+        <NavLink to="/houses" className="primary-header__nav__item" activeClassName="primary-header__nav__item--active">
           Houses
         </NavLink>
-        <NavLink to="/characters" activeClassName="active">
+        <NavLink
+          to="/characters"
+          className="primary-header__nav__item"
+          activeClassName="primary-header__nav__item--active"
+        >
           Characters
         </NavLink>
       </nav>

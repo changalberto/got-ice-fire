@@ -37,7 +37,8 @@ export const getArrayLastItem = (array: any[]): any => (!isArrayEmptyOrNull(arra
  * Returns true or false
  * @param value {String | null | undefined}
  */
-export const isStringEmptyOrNull = (value: string | null | undefined): boolean => value === null || value?.length === 0
+export const isStringEmptyOrNull = (value: string | null | undefined): boolean =>
+  value === null || value === undefined || value?.length === 0
 
 /**
  * Go back in Browser History

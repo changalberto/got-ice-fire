@@ -3,6 +3,8 @@
 @include universal-box-sizing();
 @include focus-visible();
 
+// Global Styles
+
 html,
 body {
   margin: 0;
@@ -40,6 +42,18 @@ main {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.container {
+  @include container();
+}
+
+.link {
+  color: get-color(secondary);
+}
+
+.inset-padding {
+  padding: get-spacing(lg);
 }
 
 @include component('.footer') {
