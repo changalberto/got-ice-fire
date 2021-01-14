@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { IHouse } from '../../models'
 import { RootState, AppDispatch } from '../../store'
+import { servicesSlice } from '../../store/reducers/services.reducer'
 import { historyGoBack } from '../../utilities'
 import { fetchGotHouseById } from '../../store/actions/services.actions'
 
@@ -14,14 +15,18 @@ export const HouseDetailsContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { house }: { house: IHouse } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
+  const { resetHouseState } = servicesSlice.actions
 
   // Fetch character details
   useEffect(() => {
     if (id) {
       const promise = dispatch(fetchGotHouseById(id))
-      return () => promise.abort()
+      return () => {
+        dispatch(resetHouseState())
+        promise.abort()
+      }
     }
-  }, [id, dispatch])
+  }, [id, dispatch, resetHouseState])
 
   return React.useMemo(
     () => (

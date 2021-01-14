@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { ICharacter } from '../../models'
 import { RootState, AppDispatch } from '../../store'
+import { servicesSlice } from '../../store/reducers/services.reducer'
 import { historyGoBack } from '../../utilities'
 import { fetchGotCharacterById } from '../../store/actions/services.actions'
 
@@ -14,14 +15,18 @@ export const CharacterDetailsContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { character }: { character: ICharacter } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
+  const { resetCharacterState } = servicesSlice.actions
 
   // Fetch character details
   useEffect(() => {
     if (id) {
       const promise = dispatch(fetchGotCharacterById(id))
-      return () => promise.abort()
+      return () => {
+        dispatch(resetCharacterState())
+        promise.abort()
+      }
     }
-  }, [id, dispatch])
+  }, [id, dispatch, resetCharacterState])
 
   return React.useMemo(
     () => (

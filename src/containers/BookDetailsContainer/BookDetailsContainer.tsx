@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 
 import { IBook } from '../../models'
 import { RootState, AppDispatch } from '../../store'
+import { servicesSlice } from '../../store/reducers/services.reducer'
 import {
   BookCoverSize,
   getBookCoverImageUrl,
@@ -30,14 +31,18 @@ export const BookDetailsContainer = () => {
   const { isLoading } = useSelector((state: RootState) => state.layouts)
   const { book }: { book: IBook } = useSelector((state: RootState) => state.services)
   const dispatch: AppDispatch = useDispatch()
+  const { resetBookState } = servicesSlice.actions
 
   // Fetch character details
   useEffect(() => {
     if (id) {
       const promise = dispatch(fetchGotBookById(id))
-      return () => promise.abort()
+      return () => {
+        promise.abort()
+        dispatch(resetBookState())
+      }
     }
-  }, [id, dispatch])
+  }, [id, dispatch, resetBookState])
 
   return React.useMemo(
     () => (

@@ -30,7 +30,17 @@ export const servicesSlice = createSlice({
     house: {} as IHouse,
     character: {} as ICharacter,
   },
-  reducers: {},
+  reducers: {
+    resetBookState: state => {
+      state.book = {} as IBook
+    },
+    resetHouseState: state => {
+      state.house = {} as IHouse
+    },
+    resetCharacterState: state => {
+      state.character = {} as ICharacter
+    },
+  },
   // Thunks
   extraReducers: {
     [`${fetchGotBooks.fulfilled}`]: (state, { payload }) => {
