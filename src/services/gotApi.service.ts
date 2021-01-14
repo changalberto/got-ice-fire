@@ -26,7 +26,7 @@ export const gotApi = {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses`, { params })
   },
   getHouseById: async (id?: string) => {
-    return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters/${id}`)
+    return http.get(`${ICE_FIRE_ENDPOINT_URL}/houses/${id}`)
   },
   getCharacters: async (params?: Pagination) => {
     return http.get(`${ICE_FIRE_ENDPOINT_URL}/characters`, { params })
