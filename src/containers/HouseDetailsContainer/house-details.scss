@@ -1,0 +1,33 @@
+@import '../../styles/core';
+
+@include component('.house-details') {
+  .paper-container {
+    @include container;
+
+    .book-cover {
+      width: 200px;
+      margin-right: get-spacing(xxl);
+      padding-top: get-spacing(xl);
+      padding-right: get-spacing(xxl);
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .book-info {
+      margin-right: get-spacing(xxl);
+    }
+
+    .characters {
+      margin: 0 get-spacing(xxl);
+      padding-bottom: get-spacing(xxl);
+
+      .list {
+        max-height: 80vh;
+        overflow: hidden;
+        overflow-y: scroll;
+      }
+    }
+  }
+}

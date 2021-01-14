@@ -33,7 +33,7 @@ export const DataTable = ({ columns, data, initialState }: DataTableProps) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column: any) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render('Header')}
+                  <span className="header-label">{column.render('Header')}</span>
                   {column?.isSorted && (
                     <span className="data-table__sort-icon">
                       {column?.isSortedDesc ? <TiArrowSortedDown /> : <TiArrowSortedUp />}

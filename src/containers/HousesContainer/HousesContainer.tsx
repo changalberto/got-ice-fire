@@ -72,7 +72,11 @@ export const HousesContainer = () => {
             row: { original },
           } = props
           const houseId = getLastPathnameFromUrl(original.url)
-          return <Link to={`/house/${houseId}`}>{original.name}</Link>
+          return (
+            <Link className="link" to={`/house/${houseId}`}>
+              {original.name}
+            </Link>
+          )
         },
       },
       {
@@ -90,47 +94,46 @@ export const HousesContainer = () => {
         Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
       },
       {
-        Header: 'Heir',
-        accessor: 'heir',
-        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
-      },
-      {
         Header: 'Details',
         accessor: 'titles', // Array
-        maxWidth: 300,
+        maxWidth: 250,
         Cell: (props: any) => {
           const {
             row: { original },
           } = props
           return (
-            <>
+            <div className="details-column-content">
               <div className="founded">
-                <h3>Founded</h3>
-                {original.founded ?? 'N/A'}
+                <h4>Founded</h4>
+                {original.founded ? original.founded : 'N/A'}
               </div>
               <div className="founder">
-                <h3>Founder</h3>
+                <h4>Founder</h4>
                 {original.founder ? linkCrawl(original.founder, 'character', 'name') : 'N/A'}
               </div>
+              <div className="founder">
+                <h4>Heir</h4>
+                {original.heir ? linkCrawl(original.heir, 'character', 'name') : 'N/A'}
+              </div>
               <div className="titles">
-                <h3>Titles</h3>
+                <h4>Titles</h4>
                 {!isArrayEmptyOrNull(original.titles)
                   ? original.titles.map((title: string) => <p key={title}>{title}</p>)
                   : 'N/A'}
               </div>
               <div className="coat-of-arms">
-                <h3>Coat of Arms</h3>
+                <h4>Coat of Arms</h4>
                 {original.coatOfArms}
               </div>
               <div className="words">
-                <h3>Words</h3>
+                <h4>Words</h4>
                 {original.words}
               </div>
               <div className="sworn-members">
-                <h3>Sworn Members</h3>
+                <h4>Sworn Members</h4>
                 {original.swornMembers ? linksCrawl(original.swornMembers, 'character', 'name') : 'N/A'}
               </div>
-            </>
+            </div>
           )
         },
       },
@@ -141,7 +144,18 @@ export const HousesContainer = () => {
   return React.useMemo(
     () => (
       <Page title="GOT | Houses" className="houses" isLoading={isLoading}>
-        <DataTable columns={columns} data={houses.results} />
+        <DataTable
+          columns={columns}
+          data={houses.results}
+          initialState={{
+            sortBy: [
+              {
+                id: 'name',
+                desc: false,
+              },
+            ],
+          }}
+        />
         <Pagination
           pageCount={state.pageCount}
           currentPage={state.currentPage}

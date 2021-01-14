@@ -22,11 +22,24 @@
   th {
     padding: get-spacing(md) get-spacing(sm);
     border-bottom: 1px solid get-color(border);
+    vertical-align: middle;
+
+    .header-label {
+      display: inline-flex;
+      margin-right: get-spacing(sm);
+    }
   }
 
   td {
     padding: get-spacing(md) get-spacing(sm);
     vertical-align: top;
     border-bottom: 1px solid get-color(border);
+  }
+
+  .details-column-content {
+    max-width: 450px;
+    max-height: 200px;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 }
