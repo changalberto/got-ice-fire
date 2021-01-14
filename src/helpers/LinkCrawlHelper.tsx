@@ -2,15 +2,15 @@ import { isArrayEmptyOrNull, getLastPathnameFromUrl, isStringEmptyOrNull } from 
 
 import { LinkCrawl } from '../modules/LinksList'
 
-export const linkCrawl = (value: string, baseHref: string, labelByProp: string) => {
-  return !isStringEmptyOrNull(value) ? (
-    <LinkCrawl uri={value} href={`/${baseHref}/${getLastPathnameFromUrl(value)}`} labelByProp={labelByProp} />
-  ) : (
-    ''
+export const linkCrawlHelper = (uri: string, baseHref: string, labelByProp: string) => {
+  return (
+    !isStringEmptyOrNull(uri) && (
+      <LinkCrawl uri={uri} href={`/${baseHref}/${getLastPathnameFromUrl(uri)}`} labelByProp={labelByProp} />
+    )
   )
 }
 
-export const linksCrawl = (array: string[], baseHref: string, labelByProp: string) => {
+export const linksCrawlHelper = (array: string[], baseHref: string, labelByProp: string) => {
   const uriArray = array
   return !isArrayEmptyOrNull(uriArray)
     ? uriArray.map((uri: string, index: number) => (

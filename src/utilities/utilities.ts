@@ -75,3 +75,5 @@ export const getLastPathnameFromUrl = (url: string): string | null => {
   const pathname = new URL(url).pathname
   return getArrayLastItem(pathname.split('/'))
 }
+
+export const getStringValueOrNa = (value: any): string => (isStringEmptyOrNull(value) ? 'N/A' : value)

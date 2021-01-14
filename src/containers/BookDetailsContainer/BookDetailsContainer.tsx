@@ -14,8 +14,9 @@ import {
   historyGoBack,
   isArrayEmptyOrNull,
   isStringEmptyOrNull,
+  getStringValueOrNa,
 } from '../../utilities'
-import { linksCrawl } from '../../helpers/LinkCrawl'
+import { linksCrawlHelper } from '../../helpers/LinkCrawlHelper'
 import { fetchGotBookById } from '../../store/actions/services.actions'
 
 import Page from '../../components/Page'
@@ -46,38 +47,38 @@ export const BookDetailsContainer = () => {
 
   return React.useMemo(
     () => (
-      <Page title={`GOT | Book: ${book.name ? book.name : 'N/A'}`} className="book-details" isLoading={isLoading}>
+      <Page title={`GOT | Book: ${getStringValueOrNa(book.name)}`} className="book-details" isLoading={isLoading}>
         <Breadcrumbs>
           <IconButton onClick={e => historyGoBack()}>
             <IoMdArrowRoundBack />
           </IconButton>
-          <h3>{book.name ? book.name : 'N/A'}</h3>
+          <h3>{getStringValueOrNa(book.name)}</h3>
         </Breadcrumbs>
         <Paper elevation={2}>
           <div className="inset-padding">
             <div className="paper-container">
-              <h2>{book.name ? book.name : 'N/A'}</h2>
+              <h2>{getStringValueOrNa(book.name)}</h2>
             </div>
             <div className="paper-container">
               <div className="book-cover">
-                <img src={getBookCoverImageUrl(book.isbn, BookCoverSize.Medium)} alt={book.name} />
+                <img src={getBookCoverImageUrl(book.isbn, BookCoverSize.Medium)} alt={getStringValueOrNa(book.name)} />
               </div>
               <div className="book-info">
                 <h3>Book Details</h3>
                 <p>
-                  <b>ISBN:</b> {book.isbn}
+                  <b>ISBN:</b> {getStringValueOrNa(book.isbn)}
                 </p>
                 <p>
-                  <b>{book.mediaType}:</b> {book.numberOfPages}
+                  <b>{book.mediaType}:</b> {getStringValueOrNa(book.numberOfPages)}
                 </p>
                 <p>
                   <b>Authors:</b> {book?.authors && book?.authors.join(', ')}
                 </p>
                 <p>
-                  <b>Publisher:</b> {book.publisher}
+                  <b>Publisher:</b> {getStringValueOrNa(book.publisher)}
                 </p>
                 <p>
-                  <b>Country:</b> {book.country}
+                  <b>Country:</b> {getStringValueOrNa(book.country)}
                 </p>
 
                 <p>
@@ -88,14 +89,16 @@ export const BookDetailsContainer = () => {
               <div className="characters">
                 <h3>Characters</h3>
                 <div className="list">
-                  {!isArrayEmptyOrNull(book.characters) ? linksCrawl(book.characters, 'character', 'name') : 'N/A'}
+                  {!isArrayEmptyOrNull(book.characters)
+                    ? linksCrawlHelper(book.characters, 'character', 'name')
+                    : 'N/A'}
                 </div>
               </div>
               <div className="characters">
                 <h3>POV Characters</h3>
                 <div className="list">
                   {!isArrayEmptyOrNull(book.povCharacters)
-                    ? linksCrawl(book.povCharacters, 'character', 'name')
+                    ? linksCrawlHelper(book.povCharacters, 'character', 'name')
                     : 'N/A'}
                 </div>
               </div>

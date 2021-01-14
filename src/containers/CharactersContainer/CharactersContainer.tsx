@@ -11,7 +11,7 @@ import {
 } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotCharacters } from '../../store/actions/services.actions'
-import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
+import { linkCrawlHelper, linksCrawlHelper } from '../../helpers/LinkCrawlHelper'
 
 import { useQuery } from '../../hooks/useQuery'
 import Page from '../../components/Page'
@@ -117,13 +117,13 @@ export const CharactersContainer = () => {
           return (
             <div>
               {!isStringEmptyOrNull(original.father) && (
-                <span>Father {linkCrawl(original.father, 'character', 'name')}</span>
+                <span>Father {linkCrawlHelper(original.father, 'character', 'name')}</span>
               )}
               {!isStringEmptyOrNull(original.mother) && (
-                <span>Mother {linkCrawl(original.mother, 'character', 'name')}</span>
+                <span>Mother {linkCrawlHelper(original.mother, 'character', 'name')}</span>
               )}
               {!isStringEmptyOrNull(original.spouse) && (
-                <span>Spouse {linkCrawl(original.spouse, 'character', 'name')}</span>
+                <span>Spouse {linkCrawlHelper(original.spouse, 'character', 'name')}</span>
               )}
             </div>
           )
@@ -132,12 +132,12 @@ export const CharactersContainer = () => {
       {
         Header: 'Allegiances',
         accessor: 'allegiances', // Array
-        Cell: (props: any) => linksCrawl(props.value, 'house', 'name'),
+        Cell: (props: any) => linksCrawlHelper(props.value, 'house', 'name'),
       },
       {
         Header: 'Books',
         accessor: 'books', // Array
-        Cell: (props: any) => linksCrawl(props.value, 'book', 'name'),
+        Cell: (props: any) => linksCrawlHelper(props.value, 'book', 'name'),
         Filter: SelectBookFilter,
         filter: 'includes',
         disableSortBy: true,
@@ -145,7 +145,7 @@ export const CharactersContainer = () => {
       {
         Header: 'POV Books',
         accessor: 'povBooks', // Array
-        Cell: (props: any) => linksCrawl(props.value, 'book', 'name'),
+        Cell: (props: any) => linksCrawlHelper(props.value, 'book', 'name'),
       },
       // {
       //   Header: 'TV Series',

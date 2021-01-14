@@ -4,29 +4,24 @@
   .paper-container {
     @include container;
 
-    .book-cover {
-      width: 200px;
+    .house-info {
       margin-right: get-spacing(xxl);
-      padding-top: get-spacing(xl);
-      padding-right: get-spacing(xxl);
-
-      img {
-        width: 100%;
-      }
-    }
-
-    .book-info {
-      margin-right: get-spacing(xxl);
+      flex-basis: 50%;
     }
 
     .characters {
       margin: 0 get-spacing(xxl);
       padding-bottom: get-spacing(xxl);
+      flex-basis: 33%;
+    }
 
-      .list {
-        max-height: 80vh;
-        overflow: hidden;
-        overflow-y: scroll;
+    .list {
+      max-height: 80vh;
+      overflow: hidden;
+      overflow-y: scroll;
+
+      .link-crawl {
+        display: block;
       }
     }
   }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import { gotApi } from '../../services/gotApi.service'
+import { getStringValueOrNa } from '../../utilities'
 
 import './link-crawl.scss'
 
@@ -29,19 +30,12 @@ export const LinkCrawl = ({ uri, href, labelByProp }: LinkCrawlProps) => {
 
   return React.useMemo(
     () => (
-      <div className="link-crawl">
+      <span className="link-crawl">
         <Link className="link" to={href}>
-          {label}
+          {getStringValueOrNa(label)}
         </Link>
-      </div>
+      </span>
     ),
     [href, label]
   )
-}
-
-type LinksListProps = {
-  links: string[]
-}
-export const LinksList = ({ links }: LinksListProps) => {
-  return <div className="links-list"></div>
 }

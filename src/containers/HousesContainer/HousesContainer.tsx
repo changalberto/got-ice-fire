@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { isArrayEmptyOrNull, getPageNumberFromUriParam, getUriByRel, getLastPathnameFromUrl } from '../../utilities'
 import { RootState, AppDispatch } from '../../store'
 import { fetchGotHouses } from '../../store/actions/services.actions'
-import { linkCrawl, linksCrawl } from '../../helpers/LinkCrawl'
+import { linkCrawlHelper, linksCrawlHelper } from '../../helpers/LinkCrawlHelper'
 
 import { useQuery } from '../../hooks/useQuery'
 import Page from '../../components/Page'
@@ -86,12 +86,12 @@ export const HousesContainer = () => {
       {
         Header: 'Overlord',
         accessor: 'overlord',
-        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
+        Cell: (props: any) => linkCrawlHelper(props.value, 'house', 'name'),
       },
       {
         Header: 'Current Lord',
         accessor: 'currentLord',
-        Cell: (props: any) => linkCrawl(props.value, 'character', 'name'),
+        Cell: (props: any) => linkCrawlHelper(props.value, 'character', 'name'),
       },
       {
         Header: 'Details',
@@ -109,11 +109,11 @@ export const HousesContainer = () => {
               </div>
               <div className="founder">
                 <h4>Founder</h4>
-                {original.founder ? linkCrawl(original.founder, 'character', 'name') : 'N/A'}
+                {original.founder ? linkCrawlHelper(original.founder, 'character', 'name') : 'N/A'}
               </div>
               <div className="founder">
                 <h4>Heir</h4>
-                {original.heir ? linkCrawl(original.heir, 'character', 'name') : 'N/A'}
+                {original.heir ? linkCrawlHelper(original.heir, 'character', 'name') : 'N/A'}
               </div>
               <div className="titles">
                 <h4>Titles</h4>
@@ -131,7 +131,7 @@ export const HousesContainer = () => {
               </div>
               <div className="sworn-members">
                 <h4>Sworn Members</h4>
-                {original.swornMembers ? linksCrawl(original.swornMembers, 'character', 'name') : 'N/A'}
+                {original.swornMembers ? linksCrawlHelper(original.swornMembers, 'character', 'name') : 'N/A'}
               </div>
             </div>
           )

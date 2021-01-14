@@ -41,5 +41,9 @@
     max-height: 200px;
     overflow: hidden;
     overflow-y: scroll;
+
+    .link-crawl {
+      display: block;
+    }
   }
 }
